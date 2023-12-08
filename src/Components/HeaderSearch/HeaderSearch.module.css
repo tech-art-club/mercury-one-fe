@@ -1,0 +1,27 @@
+.headerSearchWrapper {
+  font-family: 'Poppins';
+  width: 440px;
+  height: 100%;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.headerSearchWrapper input {
+  outline: none;
+  font-weight: 400;
+  font-size: 14px;
+  width: 100%;
+  padding: 4px 10px;
+  border: 1px solid black;
+  border-radius: 9px;
+  color: rgba(183, 180, 180, 1);
+  background-color: rgba(88, 86, 86, 1);
+}
