@@ -1,0 +1,30 @@
+.headerWrapper {
+  font-family: 'Poppins';
+  display: flex;
+  height: 52px;
+  padding: 10px 64px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(88, 86, 86, 1);
+}
+
+.logo {
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 24px;
+  color: white;
+}
+
+.navLink {
+  margin-right: 64px;
+  font-weight: 400;
+  font-size: 20px;
+  color: rgba(194, 192, 192, 1);
+  text-decoration: none;
+}
+
+.uiLink {
+  font-size: 20px;
+  color: black;
+  margin-left: 32px;
+}

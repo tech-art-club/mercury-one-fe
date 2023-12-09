@@ -1,15 +1,7 @@
-import React from "react";
-import Header from "../../Components/Header/Header.jsx"
-import Footer from "../../Components/Footer/Footer.jsx";
+import React from 'react';
 
 const Dashboard = () => {
-    return (
-        <div>
-            <Header />
-            
-            <Footer />
-        </div>
-    );
-}
+  return <div>Main</div>;
+};
 
-export default Dashboard
+export default Dashboard;
