@@ -66,6 +66,11 @@
   flex-direction: column;
 }
 
+.fetchedSearchContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .pastSearch {
   display: flex;
   align-items: center;

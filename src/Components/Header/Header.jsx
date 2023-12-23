@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { BsBasket3 } from 'react-icons/bs';
 import { GoPerson } from 'react-icons/go';
-import HeaderSearch from '../HeaderSearch/HeaderSearch';
+import HeaderSearch from './HeaderSearch/HeaderSearch';
 import styles from './Header.module.css';
 
 const Header = () => {
