@@ -1,0 +1,92 @@
+.recipeContainer {
+  width: 100%;
+  height: 100%;
+  padding: 35px 85px 35px 85px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: start;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.contentRow {
+  display: flex;
+  margin-top: 30px;
+}
+
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.contentRow img {
+  width: 350px;
+  height: 350px;
+  border-radius: 10px;
+  box-shadow: 0 0 2.5px black;
+}
+
+.imageContainer {
+  display: flex;
+  align-self: flex-start;
+  margin-top: 10px;
+  margin-right: 100px;
+}
+
+.ingredients {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.servings {
+  display: flex;
+  align-self: flex-end;
+}
+
+.product {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: #121212;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 10px;
+  border-bottom: 1px solid black;
+}
+
+.description {
+  width: 50%;
+  margin-left: 300px;
+}
+
+.cookingSteps {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.step {
+  width: max-content;
+  margin-top: 15px;
+  border-bottom: 1px solid black;
+}
+
+.stepDescription {
+  padding: 10px;
+  width: 70%;
+  margin-top: 15px;
+  border: 1px solid black;
+  border-radius: 5px;
+}

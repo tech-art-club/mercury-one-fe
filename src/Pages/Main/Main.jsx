@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Main.module.css';
+import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID.js';
 
 import {
   fetchActivePlaylist,
@@ -20,6 +22,7 @@ import SingleRecipe from '../../Components/MainPageComponents/SingleContent/Sing
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const activePlaylist = useSelector(selectActivePlaylist);
   const dietRecipes = useSelector(selectDietaryRecipes);
@@ -43,12 +46,17 @@ const Dashboard = () => {
     );
   }, [dispatch]);
 
+  function showRecipe(id) {
+    handleAddRecipeID(dispatch, id);
+    navigate(`/recipe/${id}`);
+  }
+
   return (
     <div className={styles.mainContainer}>
       {activePlaylist[0]?.map((el, i) => (
         <Vitrine title={el.playList.title} key={i}>
           {el.playList.recipes.map((el, i) => (
-            <SingleRecipe content={el} key={el.id} />
+            <SingleRecipe content={el} key={el.id} showRecipe={showRecipe} />
           ))}
         </Vitrine>
       ))}
