@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { SlMagnifier } from 'react-icons/sl';
 import { IoIosClose } from 'react-icons/io';
+import { handleAddRecipeID } from '../../../Helpers/handleAddRecipeID';
 import styles from './HeaderSearch.module.css';
 
 const HeaderSearch = () => {
@@ -14,6 +15,7 @@ const HeaderSearch = () => {
   const dropdown = useRef(null);
   const search = useRef(null);
   const deleteSingleSearch = useRef(null);
+  const dispatch = useDispatch();
 
   const fetchSearch = async () => {
     const res = await axios.get(
@@ -33,8 +35,6 @@ const HeaderSearch = () => {
 
   function handleInputSubmit(e) {
     e.preventDefault();
-    setInputHistory([...inputHistory, inputValue]);
-    setInputValue('');
     dropdown.current.classList.remove(`${styles.showDropdown}`);
   }
 
@@ -47,7 +47,9 @@ const HeaderSearch = () => {
   }
 
   function handleFetchedContent(e, el) {
-    setInputHistory([...inputHistory, el.Title]);
+    setInputHistory([...inputHistory, { Title: el.Title, Id: el.Id }]);
+    handleAddRecipeID(dispatch, el.Id);
+    navigate(`/recipe/${el.Id}`);
     setInputValue('');
   }
 
@@ -64,9 +66,13 @@ const HeaderSearch = () => {
     ));
   }
 
+  const getKey = (obj) => Object.values(obj).join('|');
+
   function showSearechHistory() {
     if (inputHistory.length > 0) {
-      return inputHistory
+      return Array.from(
+        new Map(inputHistory.map((obj) => [getKey(obj), obj])).values()
+      )
         .filter((el) => el !== '')
         .toReversed()
         .map((el, i) => {
@@ -78,10 +84,10 @@ const HeaderSearch = () => {
                   role="button"
                   className={styles.pastElement}
                   onClick={(e) => {
-                    setInputValue(el);
+                    handleFetchedContent(e, el);
                   }}
                 >
-                  {el}
+                  {el.Title}
                 </div>
                 <IoIosClose
                   style={{ cursor: 'pointer' }}

@@ -1,0 +1,75 @@
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectRecipe } from '../../Store/Slices/recipesReducer';
+import styles from './Recipe.module.css';
+import { useEffect, useState } from 'react';
+
+const Recipe = (props) => {
+  const { id } = useParams();
+  const [recipe, setRecipe] = useState({});
+
+  const fetchRecipe = async () => {
+    const res = await axios.get(
+      `https://mercure-recipe-app-dev.azurewebsites.net/Recipes?id=${id}`
+    );
+    return setRecipe(res.data);
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchRecipe();
+    }
+  }, [id]);
+
+  return (
+    id && (
+      <div className={styles.recipeContainer}>
+        <div className={styles.title}>{recipe.title}</div>
+        <div className={styles.contentRow}>
+          <div className={styles.imageContainer}>
+            <img src={recipe.imageUrl} alt="image" />
+          </div>
+          <div className={styles.ingredients}>
+            <p style={{ alignSelf: 'flex-start' }}>Ingredients</p>
+            <div className={styles.servings}>servings: 1 + -</div>
+            {recipe.products?.map((el) => (
+              <div className={styles.product} key={el.id}>
+                {el.name} <p>100gr</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.contentRow}>
+          <div className={styles.contentColumn}>
+            <div className={styles.cuisine}>
+              Cuisine: {recipe.cuisines?.map((el) => el.title)}
+            </div>
+            <div className={styles.dishType}>
+              Dish type: {recipe.dishTypes?.map((el) => el.title)}
+            </div>
+            <div className={styles.diet}>
+              Diet: {recipe.diets?.map((el) => el.title)}
+            </div>
+          </div>
+          <div className={styles.description}>
+            Description: <br />
+            {recipe.description}
+          </div>
+        </div>
+        <div className={styles.cookingSteps}>
+          {recipe.cookingSteps
+            ?.sort((a, b) => a.stepNumber - b.stepNumber)
+            .map((el) => (
+              <div key={el.id}>
+                <div className={styles.step}>Step {el.stepNumber}</div>
+                <div className={styles.stepDescription}>{el.description}</div>
+              </div>
+            ))}
+        </div>
+      </div>
+    )
+  );
+};
+
+export default Recipe;
