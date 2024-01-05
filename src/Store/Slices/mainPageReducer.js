@@ -11,6 +11,9 @@ const initialState = [
   {
     kitchenType: [],
   },
+  {
+    dishType: [],
+  },
 ];
 
 export const fetchActivePlaylist = createAsyncThunk(
@@ -37,19 +40,30 @@ export const fetchKitchenType = createAsyncThunk(
   }
 );
 
+export const fetchDishType = createAsyncThunk(
+  'mainPage/fetchDishType',
+  async (url) => {
+    const res = await axios.get(url);
+    return res.data;
+  }
+);
+
 const mainPageSlice = createSlice({
   name: 'mainPage',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchActivePlaylist.fulfilled, (state, action) => {
-      state[0].activePlaylist.push(action.payload);
+      state[0].activePlaylist = [action.payload];
     });
     builder.addCase(fetchDietaryRecipes.fulfilled, (state, action) => {
-      state[1].dietaryRecipes.push(action.payload);
+      state[1].dietaryRecipes = [action.payload];
     });
     builder.addCase(fetchKitchenType.fulfilled, (state, action) => {
-      state[2].kitchenType.push(action.payload);
+      state[2].kitchenType = [action.payload];
+    });
+    builder.addCase(fetchDishType.fulfilled, (state, action) => {
+      state[3].dishType = [action.payload];
     });
   },
 });
@@ -59,5 +73,6 @@ export const selectActivePlaylist = (state) =>
 export const selectDietaryRecipes = (state) =>
   state.mainPage[1]?.dietaryRecipes;
 export const selectKitchenType = (state) => state.mainPage[2]?.kitchenType;
+export const selectDishType = (state) => state.mainPage[3]?.dishType;
 
 export default mainPageSlice.reducer;

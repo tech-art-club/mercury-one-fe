@@ -1,0 +1,26 @@
+.mainContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.generateRecipeBtn {
+  cursor: pointer;
+  width: 150px;
+  font-size: 20px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.generateRecipeBtn:hover {
+  background-color: rgb(9, 175, 9);
+}
+
+.loadingContainer {
+  margin-top: 200px;
+}

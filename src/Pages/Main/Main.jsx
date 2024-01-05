@@ -8,7 +8,10 @@ import {
   fetchActivePlaylist,
   fetchDietaryRecipes,
   fetchKitchenType,
+  fetchDishType,
 } from '../../Store/Slices/mainPageReducer';
+
+import { fetchProducts } from '../../Store/Slices/productsReducer.js';
 
 import {
   selectActivePlaylist,
@@ -42,6 +45,16 @@ const Dashboard = () => {
     dispatch(
       fetchDietaryRecipes(
         'https://mercure-recipe-app-dev.azurewebsites.net/Diets/all'
+      )
+    );
+    dispatch(
+      fetchDishType(
+        'https://mercure-recipe-app-dev.azurewebsites.net/DishTypes/all'
+      )
+    );
+    dispatch(
+      fetchProducts(
+        'https://mercure-recipe-app-dev.azurewebsites.net/Products/all'
       )
     );
   }, [dispatch]);
