@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Dashboard from './Main/Main.jsx';
 import Auth from '../Pages/Auth/Auth.jsx';
@@ -15,7 +15,7 @@ import './App.css';
 const App = () => {
   return (
     <div className="App">
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
@@ -28,7 +28,7 @@ const App = () => {
             <Route path="auth" element={<Auth />} />
           </Route>
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
       {/* <Footer /> */}
     </div>
   );
