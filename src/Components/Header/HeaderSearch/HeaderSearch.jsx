@@ -30,7 +30,7 @@ const HeaderSearch = () => {
     if (inputValue.length < 3) {
       setFetchedValue([]);
     }
-  }, [inputValue]);
+  }, [inputValue, fetchSearch]);
 
   function handleInputSubmit(e) {
     e.preventDefault();
