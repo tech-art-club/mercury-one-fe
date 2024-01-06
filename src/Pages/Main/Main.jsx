@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './Main.module.css';
 import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID.js';
 
-import {
+/* import {
   fetchActivePlaylist,
   fetchDietaryRecipes,
   fetchKitchenType,
   fetchDishType,
 } from '../../Store/Slices/mainPageReducer';
 
-import { fetchProducts } from '../../Store/Slices/productsReducer.js';
+import { fetchProducts } from '../../Store/Slices/productsReducer.js'; */
 
 import {
   selectActivePlaylist,
@@ -31,7 +31,7 @@ const Dashboard = () => {
   const dietRecipes = useSelector(selectDietaryRecipes);
   const kitchenTypes = useSelector(selectKitchenType);
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(
       fetchActivePlaylist(
         'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active'
@@ -57,7 +57,7 @@ const Dashboard = () => {
         'https://mercure-recipe-app-dev.azurewebsites.net/Products/all'
       )
     );
-  }, [dispatch]);
+  }, [dispatch]); */
 
   function showRecipe(id) {
     handleAddRecipeID(dispatch, id);

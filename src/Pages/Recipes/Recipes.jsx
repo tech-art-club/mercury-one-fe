@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Recipes.module.css';
 import { selectFilter } from '../../Store/Slices/filterReducer';
@@ -17,20 +18,23 @@ import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
 const Recipes = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const urlSearchParams = new URLSearchParams(location.search);
+
+  const filter = {
+    diets: urlSearchParams.get('diets')?.split(',') || [],
+    dish: urlSearchParams.get('dish')?.split(',') || [],
+    cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+  };
+
+  const dish = useSelector(selectDishType)[0];
+  const diet = useSelector(selectDietaryRecipes)[0];
+  const cuisine = useSelector(selectKitchenType)[0];
 
   const filtredRecipes = useSelector(selectFilter);
-  const [dishTypeTitles, setDishTypeTitles] = useState(
-    useSelector(selectDishType)[0]?.map((el) => ({ ...el, checked: false }))
-  );
-  const [kitchenTypeTitles, setKitchenTypeTitles] = useState(
-    useSelector(selectKitchenType)[0]?.map((el) => ({ ...el, checked: false }))
-  );
-  const [dietTypeTitles, setDietTypeTitles] = useState(
-    useSelector(selectDietaryRecipes)[0]?.map((el) => ({
-      ...el,
-      checked: false,
-    }))
-  );
+  const [dishTypeTitles, setDishTypeTitles] = useState();
+  const [kitchenTypeTitles, setKitchenTypeTitles] = useState();
+  const [dietTypeTitles, setDietTypeTitles] = useState();
 
   function isCheckedDishType(obj) {
     setDishTypeTitles((dishTypeTitles) =>
@@ -41,6 +45,9 @@ const Recipes = () => {
         return el;
       })
     );
+
+    urlSearchParams.set('dish', obj.title);
+    navigate({ search: urlSearchParams.toString() });
   }
 
   function isCheckedKitchenType(obj) {
@@ -102,6 +109,20 @@ const Recipes = () => {
     handleAddRecipeID(dispatch, id);
     navigate(`/recipe/${id}`);
   }
+
+  useEffect(() => {
+    if (Array.isArray(dish)) {
+      setDishTypeTitles(dish.map((el) => ({ ...el, checked: false })));
+    }
+
+    if (Array.isArray(cuisine)) {
+      setKitchenTypeTitles(cuisine.map((el) => ({ ...el, checked: false })));
+    }
+
+    if (Array.isArray(diet)) {
+      setDietTypeTitles(diet.map((el) => ({ ...el, checked: false })));
+    }
+  }, [dish, cuisine, diet]);
 
   useEffect(() => {
     dispatch(

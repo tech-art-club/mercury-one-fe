@@ -8,7 +8,7 @@ import Generator from './Generator/Generator.jsx';
 import Diet from './Diet/Diet.jsx';
 import RandomRecipe from './RandomRecipe/RandomRecipe.jsx';
 import Basket from './Basket/Basket.jsx';
-import Footer from '../Components/Footer/Footer.jsx';
+/* import Footer from '../Components/Footer/Footer.jsx'; */
 import MainLayout from '../Layouts/MainLayout.jsx';
 import './App.css';
 
@@ -19,8 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="recipe/:id" Component={Recipe} />
-            <Route path="recipes" element={<Recipes />} />
+            <Route path="recipe/:id" element={<Recipe />} />
+            <Route path="recipes" Component={Recipes} />
             <Route path="generator" element={<Generator />} />
             <Route path="diet" element={<Diet />} />
             <Route path="random_recipe" element={<RandomRecipe />} />
