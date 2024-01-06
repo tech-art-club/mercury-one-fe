@@ -14,7 +14,6 @@ const HeaderSearch = () => {
   const navigate = useNavigate();
   const dropdown = useRef(null);
   const search = useRef(null);
-  const deleteSingleSearch = useRef(null);
   const dispatch = useDispatch();
 
   const fetchSearch = async () => {

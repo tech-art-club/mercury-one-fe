@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectRecipe } from '../../Store/Slices/recipesReducer';
 import styles from './Recipe.module.css';
 import { useEffect, useState } from 'react';
 
-const Recipe = (props) => {
+const Recipe = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
 
@@ -28,7 +26,7 @@ const Recipe = (props) => {
         <div className={styles.title}>{recipe.title}</div>
         <div className={styles.contentRow}>
           <div className={styles.imageContainer}>
-            <img src={recipe.imageUrl} alt="image" />
+            <img src={recipe.imageUrl} alt="img" />
           </div>
           <div className={styles.ingredients}>
             <p style={{ alignSelf: 'flex-start' }}>Ingredients</p>
