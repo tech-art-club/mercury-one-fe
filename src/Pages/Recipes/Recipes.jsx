@@ -27,6 +27,8 @@ const Recipes = () => {
     cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
   };
 
+  console.log(filter);
+
   const dish = useSelector(selectDishType)[0];
   const diet = useSelector(selectDietaryRecipes)[0];
   const cuisine = useSelector(selectKitchenType)[0];

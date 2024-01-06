@@ -16,21 +16,23 @@ const HeaderSearch = () => {
   const search = useRef(null);
   const dispatch = useDispatch();
 
-  const fetchSearch = async () => {
-    const res = await axios.get(
-      `https://mercure-recipe-app-dev.azurewebsites.net/OData/Recipes?$filter=contains(title,'${inputValue}')`
-    );
-    return setFetchedValue(res.data.value);
-  };
+  
 
   useEffect(() => {
+    const fetchSearch = async (value) => {
+      const res = await axios.get(
+        `https://mercure-recipe-app-dev.azurewebsites.net/OData/Recipes?$filter=contains(title,'${value}')`
+      );
+      return setFetchedValue(res.data.value);
+    };
+
     if (inputValue.length > 2) {
-      fetchSearch();
+      fetchSearch(inputValue);
     }
     if (inputValue.length < 3) {
       setFetchedValue([]);
     }
-  }, [inputValue, fetchSearch]);
+  }, [inputValue]);
 
   function handleInputSubmit(e) {
     e.preventDefault();

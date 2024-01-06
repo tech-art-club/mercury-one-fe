@@ -7,16 +7,18 @@ const Recipe = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
 
-  const fetchRecipe = async () => {
-    const res = await axios.get(
-      `https://mercure-recipe-app-dev.azurewebsites.net/Recipes?id=${id}`
-    );
-    return setRecipe(res.data);
-  };
+  
 
   useEffect(() => {
+    const fetchRecipe = async (recipeId) => {
+      const res = await axios.get(
+        `https://mercure-recipe-app-dev.azurewebsites.net/Recipes?id=${recipeId}`
+      );
+      return setRecipe(res.data);
+    };
+
     if (id) {
-      fetchRecipe();
+      fetchRecipe(id);
     }
   }, [id]);
 
