@@ -1,20 +1,19 @@
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 const OutsideClickHandler = ({ subItemRefs = [], onOutsideClick, children }) => {
-
     const wrapperRef = useRef(null);
 
-    const handleClickOutside = (event) => {
+    const handleClickOutside = useCallback((event) => {
         subItemRefs.forEach(elementRef => {
             if (elementRef.current && !elementRef.current.contains(event.target)) {
                 onOutsideClick();
             }
         });
-    };
+    }, [subItemRefs, onOutsideClick]);
 
     useEffect(() => {
-        subItemRefs.push(wrapperRef)
-    }, [subItemRefs])
+        subItemRefs.push(wrapperRef);
+    }, [subItemRefs]);
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
@@ -22,7 +21,7 @@ const OutsideClickHandler = ({ subItemRefs = [], onOutsideClick, children }) => 
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
-    }, [onOutsideClick]);
+    }, [handleClickOutside]);
 
     return <div ref={wrapperRef}>{children}</div>;
 };
