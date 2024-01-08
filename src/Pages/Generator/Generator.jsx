@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import MoonLoader from 'react-spinners/MoonLoader';
-import axios from 'axios';
 import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
 import { selectProducts } from '../../Store/Slices/productsReducer';
 import {
@@ -12,6 +11,7 @@ import {
 } from '../../Store/Slices/mainPageReducer';
 import InputTags from '../../Components/GeneratorComponents/InputTags/InputTags';
 import styles from './Generator.module.css';
+import { generateRecipeAsync } from '../../Clients/RecipeHttpClient/RecipeHttpClient';
 
 const Generator = () => {
   const navigate = useNavigate();
@@ -23,37 +23,37 @@ const Generator = () => {
   const [availableProductIds, setAvailableProductIds] = useState([]);
   const [desiredProductIds, setDesiredProductIds] = useState([]);
   const [unacceptableProductIds, setUnacceptableProductIds] = useState([]);
+  const [additionalRequirementsInputValue, setAdditionalRequirementsInputValue] = useState('');
 
   const allDiets = useSelector(selectDietaryRecipes)[0];
   const allKitchenTypes = useSelector(selectKitchenType)[0];
   const allDishTypes = useSelector(selectDishType)[0];
   const allProducts = useSelector(selectProducts);
 
-  const url =
-    'https://mercure-recipe-app-dev.azurewebsites.net/Recipes/generate?withImage=true';
-  const requestData = {
-    dietIds: dietIds?.map((el) => el.id),
-    cuisineIds: cuisineIds?.map((el) => el.id),
-    dishTypeIds: dishTypeIds?.map((el) => el.id),
-    availableProductIds: availableProductIds?.map((el) => el.id),
-    desiredProductIds: desiredProductIds?.map((el) => el.id),
-    unacceptableProductIds: unacceptableProductIds?.map((el) => el.id),
+  function prepareRequestData () {
+    var result = {
+      dietIds: dietIds?.map((el) => el.id),
+      cuisineIds: cuisineIds?.map((el) => el.id),
+      dishTypeIds: dishTypeIds?.map((el) => el.id),
+      availableProductIds: availableProductIds?.map((el) => el.id),
+      desiredProductIds: desiredProductIds?.map((el) => el.id),
+      unacceptableProductIds: unacceptableProductIds?.map((el) => el.id),
+      additionalRequirements: additionalRequirementsInputValue
+    };
+
+    return result;
   };
 
   async function sendPostRequest() {
-    let recipeId;
-    try {
       setLoading(true);
-      const response = await axios.post(url, requestData);
-      recipeId = response.data;
-      handleAddRecipeID(dispatch, response.data);
-    } catch (error) {
-      console.error('Ошибка при отправке POST-запроса:', error);
-    } finally {
+      const requestData = prepareRequestData();
+      const recipeId = await generateRecipeAsync(requestData);
+
+      handleAddRecipeID(dispatch, recipeId);
+    
       setLoading(false);
       console.log(recipeId);
       navigate(`/recipe/${recipeId}`);
-    }
   }
 
   function addAvailableProductIds(obj) {
@@ -150,6 +150,12 @@ const Generator = () => {
             activeTags={unacceptableProductIds}
             title={'Unacceptable products:'}
             titleFieldPath={'name'}
+          />
+          <input
+            type="text"
+            placeholder="Additional Requirements"
+            value={additionalRequirementsInputValue}
+            onChange={(e) => setAdditionalRequirementsInputValue(e.target.value)}
           />
           <button
             className={styles.generateRecipeBtn}

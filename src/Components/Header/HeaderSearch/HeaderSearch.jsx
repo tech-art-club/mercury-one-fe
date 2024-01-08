@@ -16,8 +16,6 @@ const HeaderSearch = () => {
   const search = useRef(null);
   const dispatch = useDispatch();
 
-  
-
   useEffect(() => {
     const fetchSearch = async (value) => {
       const res = await axios.get(
