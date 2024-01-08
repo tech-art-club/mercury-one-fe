@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,13 +21,14 @@ const Recipes = () => {
   const location = useLocation();
   const urlSearchParams = new URLSearchParams(location.search);
 
-  const filter = {
-    diets: urlSearchParams.get('diets')?.split(',') || [],
-    dish: urlSearchParams.get('dish')?.split(',') || [],
-    cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-  };
-
-  console.log(filter);
+  const filter = useMemo(() => {
+    const urlSearchParams = new URLSearchParams(location.search);
+    return {
+      diets: urlSearchParams.get('diets')?.split(',') || [],
+      dish: urlSearchParams.get('dish')?.split(',') || [],
+      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+    };
+  }, [location.search]);
 
   const dish = useSelector(selectDishType)[0];
   const diet = useSelector(selectDietaryRecipes)[0];
@@ -38,25 +39,33 @@ const Recipes = () => {
   const [kitchenTypeTitles, setKitchenTypeTitles] = useState();
   const [dietTypeTitles, setDietTypeTitles] = useState();
 
-  console.log(filter);
+  const isTitleInFilter = (titles, title) => titles.some((el) => el === title);
 
   function isCheckedDishType(obj) {
-    setDishTypeTitles((dishTypeTitles) =>
-      dishTypeTitles.map((el) => {
+    setDishTypeTitles((prevDishTypeTitles) => {
+      const dishTitle = obj.title;
+
+      if (isTitleInFilter(filter.dish, dishTitle)) {
+        filter.dish = filter.dish.filter((title) => title !== dishTitle);
+      } else {
+        filter.dish.push(dishTitle);
+      }
+
+      if (filter.dish.length > 0) {
+        urlSearchParams.set('dish', filter.dish.join(','));
+      } else {
+        urlSearchParams.delete('dish');
+      }
+      navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+
+      return prevDishTypeTitles.map((el) => {
         if (el.id === obj.id) {
           return { ...el, checked: !el.checked };
         }
-        return el;
-      })
-    );
 
-    if (urlSearchParams.has('dish')) {
-      const currentParamValue = urlSearchParams.get('dish');
-      urlSearchParams.set('dish', `${currentParamValue},${obj.title}`);
-    } else {
-      urlSearchParams.append('dish', obj.title);
-    }
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+        return el;
+      });
+    });
   }
 
   function isCheckedKitchenType(obj) {
@@ -98,14 +107,27 @@ const Recipes = () => {
   }
 
   function removeTagDishType(obj) {
-    setDishTypeTitles((dishTypeTitles) =>
-      dishTypeTitles.map((el) => {
+    setDishTypeTitles((prevDishTypeTitles) => {
+      const updatedDishTypeTitles = prevDishTypeTitles.map((el) => {
         if (el.id === obj.id) {
           return { ...el, checked: false };
         }
         return el;
-      })
-    );
+      });
+
+      const dishTitle = obj.title;
+      filter.dish = filter.dish.filter((title) => title !== dishTitle);
+
+      if (filter.dish.length > 0) {
+        urlSearchParams.set('dish', filter.dish.join(','));
+      } else {
+        urlSearchParams.delete('dish');
+      }
+
+      navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+
+      return updatedDishTypeTitles;
+    });
   }
 
   function removeTagKitchenType(obj) {
@@ -137,17 +159,32 @@ const Recipes = () => {
 
   useEffect(() => {
     if (Array.isArray(dish)) {
-      setDishTypeTitles(dish.map((el) => ({ ...el, checked: false })));
+      setDishTypeTitles((prevTitles) =>
+        dish.map((el) => ({
+          ...el,
+          checked: isTitleInFilter(filter.dish, el.title),
+        }))
+      );
     }
 
     if (Array.isArray(cuisine)) {
-      setKitchenTypeTitles(cuisine.map((el) => ({ ...el, checked: false })));
+      setKitchenTypeTitles((prevTitles) =>
+        cuisine.map((el) => ({
+          ...el,
+          checked: isTitleInFilter(filter.cuisine, el.title),
+        }))
+      );
     }
 
     if (Array.isArray(diet)) {
-      setDietTypeTitles(diet.map((el) => ({ ...el, checked: false })));
+      setDietTypeTitles((prevTitles) =>
+        diet.map((el) => ({
+          ...el,
+          checked: isTitleInFilter(filter.diets, el.title),
+        }))
+      );
     }
-  }, [dish, cuisine, diet]);
+  }, [dish, cuisine, diet, filter]);
 
   useEffect(() => {
     dispatch(
