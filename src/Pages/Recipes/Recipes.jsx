@@ -36,6 +36,8 @@ const Recipes = () => {
   const [kitchenTypeTitles, setKitchenTypeTitles] = useState();
   const [dietTypeTitles, setDietTypeTitles] = useState();
 
+  console.log(filter);
+
   function isCheckedDishType(obj) {
     setDishTypeTitles((dishTypeTitles) =>
       dishTypeTitles.map((el) => {
@@ -46,8 +48,13 @@ const Recipes = () => {
       })
     );
 
-    urlSearchParams.set('dish', obj.title);
-    navigate({ search: urlSearchParams.toString() });
+    if (urlSearchParams.has('dish')) {
+      const currentParamValue = urlSearchParams.get('dish');
+      urlSearchParams.set('dish', `${currentParamValue},${obj.title}`);
+    } else {
+      urlSearchParams.append('dish', obj.title);
+    }
+    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
   }
 
   function isCheckedKitchenType(obj) {
@@ -59,6 +66,14 @@ const Recipes = () => {
         return el;
       })
     );
+
+    if (urlSearchParams.has('cuisine')) {
+      const currentParamValue = urlSearchParams.get('cuisine');
+      urlSearchParams.set('cuisine', `${currentParamValue},${obj.title}`);
+    } else {
+      urlSearchParams.append('cuisine', obj.title);
+    }
+    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
   }
 
   function isCheckedDietType(obj) {
@@ -70,6 +85,14 @@ const Recipes = () => {
         return el;
       })
     );
+
+    if (urlSearchParams.has('diets')) {
+      const currentParamValue = urlSearchParams.get('diets');
+      urlSearchParams.set('diets', `${currentParamValue},${obj.title}`);
+    } else {
+      urlSearchParams.append('diets', obj.title);
+    }
+    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
   }
 
   function removeTagDishType(obj) {
