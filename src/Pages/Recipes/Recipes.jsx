@@ -21,149 +21,147 @@ const Recipes = () => {
   const location = useLocation();
   const urlSearchParams = new URLSearchParams(location.search);
 
-  const filter = useMemo(() => {
-    const urlSearchParams = new URLSearchParams(location.search);
-    return {
-      diets: urlSearchParams.get('diets')?.split(',') || [],
-      dish: urlSearchParams.get('dish')?.split(',') || [],
-      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-    };
-  }, [location.search]);
+  const filter = {
+    diets: urlSearchParams.get('diets')?.split(',') || [],
+    dish: urlSearchParams.get('dish')?.split(',') || [],
+    cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+  };
 
   const dish = useSelector(selectDishType)[0];
   const diet = useSelector(selectDietaryRecipes)[0];
   const cuisine = useSelector(selectKitchenType)[0];
 
   const filtredRecipes = useSelector(selectFilter);
-  const [dishTypeTitles, setDishTypeTitles] = useState();
-  const [kitchenTypeTitles, setKitchenTypeTitles] = useState();
-  const [dietTypeTitles, setDietTypeTitles] = useState();
 
-  const isTitleInFilter = (titles, title) => titles.some((el) => el === title);
+  // const [dishTypeTitles, setDishTypeTitles] = useState();
+  // const [kitchenTypeTitles, setKitchenTypeTitles] = useState();
+  // const [dietTypeTitles, setDietTypeTitles] = useState();
 
-  function isCheckedDishType(obj) {
-    const dishTitle = obj.title;
+  // const isTitleInFilter = (titles, title) => titles.some((el) => el === title);
 
-    if (isTitleInFilter(filter.dish, dishTitle)) {
-      filter.dish = filter.dish.filter((title) => title !== dishTitle);
-    } else {
-      filter.dish.push(dishTitle);
-    }
+  // function isCheckedDishType(obj) {
+  //   const dishTitle = obj.title;
 
-    if (filter.dish.length > 0) {
-      urlSearchParams.set('dish', filter.dish.join(','));
-    } else {
-      urlSearchParams.delete('dish');
-    }
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (isTitleInFilter(filter.dish, dishTitle)) {
+  //     filter.dish = filter.dish.filter((title) => title !== dishTitle);
+  //   } else {
+  //     filter.dish.push(dishTitle);
+  //   }
 
-  function isCheckedKitchenType(obj) {
-    const kitchenTitle = obj.title;
+  //   if (filter.dish.length > 0) {
+  //     urlSearchParams.set('dish', filter.dish.join(','));
+  //   } else {
+  //     urlSearchParams.delete('dish');
+  //   }
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-    if (isTitleInFilter(filter.cuisine, kitchenTitle)) {
-      filter.cuisine = filter.cuisine.filter((title) => title !== kitchenTitle);
-    } else {
-      filter.cuisine.push(kitchenTitle);
-    }
+  // function isCheckedKitchenType(obj) {
+  //   const kitchenTitle = obj.title;
 
-    if (filter.cuisine.length > 0) {
-      urlSearchParams.set('cuisine', filter.cuisine.join(','));
-    } else {
-      urlSearchParams.delete('cuisine');
-    }
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (isTitleInFilter(filter.cuisine, kitchenTitle)) {
+  //     filter.cuisine = filter.cuisine.filter((title) => title !== kitchenTitle);
+  //   } else {
+  //     filter.cuisine.push(kitchenTitle);
+  //   }
 
-  function isCheckedDietType(obj) {
-    const dietTitle = obj.title;
+  //   if (filter.cuisine.length > 0) {
+  //     urlSearchParams.set('cuisine', filter.cuisine.join(','));
+  //   } else {
+  //     urlSearchParams.delete('cuisine');
+  //   }
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-    if (isTitleInFilter(filter.diets, dietTitle)) {
-      filter.diets = filter.diets.filter((title) => title !== dietTitle);
-    } else {
-      filter.diets.push(dietTitle);
-    }
+  // function isCheckedDietType(obj) {
+  //   const dietTitle = obj.title;
 
-    if (filter.diets.length > 0) {
-      urlSearchParams.set('diets', filter.diets.join(','));
-    } else {
-      urlSearchParams.delete('diets');
-    }
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (isTitleInFilter(filter.diets, dietTitle)) {
+  //     filter.diets = filter.diets.filter((title) => title !== dietTitle);
+  //   } else {
+  //     filter.diets.push(dietTitle);
+  //   }
 
-  function removeTagDishType(obj) {
-    const dishTitle = obj.title;
-    filter.dish = filter.dish.filter((title) => title !== dishTitle);
+  //   if (filter.diets.length > 0) {
+  //     urlSearchParams.set('diets', filter.diets.join(','));
+  //   } else {
+  //     urlSearchParams.delete('diets');
+  //   }
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-    if (filter.dish.length > 0) {
-      urlSearchParams.set('dish', filter.dish.join(','));
-    } else {
-      urlSearchParams.delete('dish');
-    }
+  // function removeTagDishType(obj) {
+  //   const dishTitle = obj.title;
+  //   filter.dish = filter.dish.filter((title) => title !== dishTitle);
 
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (filter.dish.length > 0) {
+  //     urlSearchParams.set('dish', filter.dish.join(','));
+  //   } else {
+  //     urlSearchParams.delete('dish');
+  //   }
 
-  function removeTagKitchenType(obj) {
-    const kitchenTitle = obj.title;
-    filter.cuisine = filter.cuisine.filter((title) => title !== kitchenTitle);
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-    if (filter.cuisine.length > 0) {
-      urlSearchParams.set('cuisine', filter.cuisine.join(','));
-    } else {
-      urlSearchParams.delete('cuisine');
-    }
+  // function removeTagKitchenType(obj) {
+  //   const kitchenTitle = obj.title;
+  //   filter.cuisine = filter.cuisine.filter((title) => title !== kitchenTitle);
 
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (filter.cuisine.length > 0) {
+  //     urlSearchParams.set('cuisine', filter.cuisine.join(','));
+  //   } else {
+  //     urlSearchParams.delete('cuisine');
+  //   }
 
-  function removeTagDietType(obj) {
-    const dietTitle = obj.title;
-    filter.diets = filter.diets.filter((title) => title !== dietTitle);
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-    if (filter.diets.length > 0) {
-      urlSearchParams.set('diets', filter.diets.join(','));
-    } else {
-      urlSearchParams.delete('diets');
-    }
+  // function removeTagDietType(obj) {
+  //   const dietTitle = obj.title;
+  //   filter.diets = filter.diets.filter((title) => title !== dietTitle);
 
-    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
-  }
+  //   if (filter.diets.length > 0) {
+  //     urlSearchParams.set('diets', filter.diets.join(','));
+  //   } else {
+  //     urlSearchParams.delete('diets');
+  //   }
 
-  function showRecipe(id) {
-    handleAddRecipeID(dispatch, id);
-    navigate(`/recipe/${id}`);
-  }
+  //   navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  // }
 
-  useEffect(() => {
-    if (Array.isArray(dish)) {
-      setDishTypeTitles(
-        dish.map((el) => ({
-          ...el,
-          checked: isTitleInFilter(filter.dish, el.title),
-        }))
-      );
-    }
+  // function showRecipe(id) {
+  //   handleAddRecipeID(dispatch, id);
+  //   navigate(`/recipe/${id}`);
+  // }
 
-    if (Array.isArray(cuisine)) {
-      setKitchenTypeTitles(
-        cuisine.map((el) => ({
-          ...el,
-          checked: isTitleInFilter(filter.cuisine, el.title),
-        }))
-      );
-    }
+  // useEffect(() => {
+  //   if (Array.isArray(dish)) {
+  //     setDishTypeTitles(
+  //       dish.map((el) => ({
+  //         ...el,
+  //         checked: isTitleInFilter(filter.dish, el.title),
+  //       }))
+  //     );
+  //   }
 
-    if (Array.isArray(diet)) {
-      setDietTypeTitles(
-        diet.map((el) => ({
-          ...el,
-          checked: isTitleInFilter(filter.diets, el.title),
-        }))
-      );
-    }
-  }, [dish, cuisine, diet, filter]);
+  //   if (Array.isArray(cuisine)) {
+  //     setKitchenTypeTitles(
+  //       cuisine.map((el) => ({
+  //         ...el,
+  //         checked: isTitleInFilter(filter.cuisine, el.title),
+  //       }))
+  //     );
+  //   }
+
+  //   if (Array.isArray(diet)) {
+  //     setDietTypeTitles(
+  //       diet.map((el) => ({
+  //         ...el,
+  //         checked: isTitleInFilter(filter.diets, el.title),
+  //       }))
+  //     );
+  //   }
+  // }, [dish, cuisine, diet, filter]);
 
   useEffect(() => {
     dispatch(
@@ -173,26 +171,66 @@ const Recipes = () => {
     );
   }, [dispatch]);
 
+
+  function addToQuery(key, value) {
+    var currentValue = urlSearchParams.get(key);
+
+    if (currentValue) {
+      urlSearchParams.set(key, currentValue + ',' + value);
+    } else {
+      urlSearchParams.set(key, value);
+    }
+
+    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  }
+
+  function removeFromQuery(key, value) {
+    const currentValue = urlSearchParams.get(key);
+
+    if (currentValue) {
+      const valuesArray = currentValue.split(',');
+
+      const indexToRemove = valuesArray.indexOf(value);
+      if (indexToRemove !== -1) {
+        valuesArray.splice(indexToRemove, 1);
+      }
+
+      if (valuesArray.length === 0) {
+        urlSearchParams.delete(key);
+      } else {
+        urlSearchParams.set(key, valuesArray.join(','));
+      }
+    }
+
+    navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
+  }
+
   return (
     <div className={styles.mainContainer}>
       <aside className={styles.filerContainer}>
         <FilterContainer
-          content={dishTypeTitles}
+          content={dish}
           title={'Type of dish'}
-          isChecked={isCheckedDishType}
+          onCheck={(title) => { addToQuery('dish', title) }}
+          onUncheck={(title) => { removeFromQuery('dish', title) }}
+          checked={filter.dish}
         />
         <FilterContainer
-          content={kitchenTypeTitles}
+          content={cuisine}
           title={'World cuisine'}
-          isChecked={isCheckedKitchenType}
+          onCheck={(title) => { addToQuery('cuisine', title) }}
+          onUncheck={(title) => { removeFromQuery('cuisine', title) }}
+          checked={filter.cuisine}
         />
         <FilterContainer
-          content={dietTypeTitles}
+          content={diet}
           title={'Food type'}
-          isChecked={isCheckedDietType}
+          onCheck={(title) => { addToQuery('diets', title) }}
+          onUncheck={(title) => { removeFromQuery('diets', title) }}
+          checked={filter.diets}
         />
       </aside>
-      <div className={styles.recipesContainer}>
+      {/* <div className={styles.recipesContainer}>
         <div className={styles.activeTags}>
           {dishTypeTitles?.map((el) =>
             el.checked === true ? (
@@ -238,7 +276,7 @@ const Recipes = () => {
             showRecipe={showRecipe}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

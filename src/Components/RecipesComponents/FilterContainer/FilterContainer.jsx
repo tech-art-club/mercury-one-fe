@@ -3,11 +3,17 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import styles from './FilterContainer.module.css';
 import InputFilter from '../InputFilter/InputFilter';
 
-const FilterContainer = ({ content, title, isChecked }) => {
+const FilterContainer = ({ content, onCheck, onUncheck, checked, title }) => {
   const [showDropdown, setShowDropdown] = useState(true);
 
   function toggleDropdown() {
     setShowDropdown(!showDropdown);
+  }
+
+  console.log('---', title, '---', content, '---');
+
+  function isChechBoxChecked(title) {
+    return checked.includes(title);
   }
 
   return (
@@ -26,7 +32,12 @@ const FilterContainer = ({ content, title, isChecked }) => {
       {showDropdown && (
         <div className={styles.checkboxesContainer}>
           {content?.map((el) => (
-            <InputFilter key={el.id} content={el} isChecked={isChecked} />
+            <InputFilter
+              onUncheck={onUncheck}
+              onCheck={onCheck}
+              key={el.id}
+              content={el}
+              isChecked={isChechBoxChecked(el.title)} />
           ))}
         </div>
       )}
