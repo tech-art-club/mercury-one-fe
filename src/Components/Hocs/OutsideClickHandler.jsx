@@ -22,7 +22,7 @@ const OutsideClickHandler = ({ subItemRefs = [], onOutsideClick, children }) => 
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
-    }, [onOutsideClick]);
+    }, [onOutsideClick, handleClickOutside]);
 
     return <div ref={wrapperRef}>{children}</div>;
 };
