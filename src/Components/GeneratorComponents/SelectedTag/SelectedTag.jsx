@@ -2,7 +2,6 @@ import { RxCross2 } from 'react-icons/rx';
 import styles from './SelectedTag.module.css';
 
 const SelectedTag = ({ content, removeTag }) => {
-  console.log(content);
   return (
     <div className={styles.activeTag} key={content.id}>
       {content.value}

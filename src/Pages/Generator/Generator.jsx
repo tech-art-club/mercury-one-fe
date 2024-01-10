@@ -52,7 +52,7 @@ const Generator = () => {
       handleAddRecipeID(dispatch, recipeId);
     
       setLoading(false);
-      console.log(recipeId);
+
       navigate(`/recipe/${recipeId}`);
   }
 

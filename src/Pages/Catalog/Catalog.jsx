@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,17 +19,55 @@ const Catalog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log(location);
   const urlSearchParams = new URLSearchParams(location.search);
 
-  const filter = {
-    diets: urlSearchParams.get('diets')?.split(',') || [],
-    dish: urlSearchParams.get('dish')?.split(',') || [],
-    cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-  };
 
-  const dish = useSelector(selectDishType)[0];
-  const diet = useSelector(selectDietaryRecipes)[0];
-  const cuisine = useSelector(selectKitchenType)[0];
+  const allDishTypes = useSelector(selectDishType);
+  const allDietTypes = useSelector(selectDietaryRecipes);
+  const allCuisineTypes = useSelector(selectKitchenType);
+
+
+  const getSelectedFilterTitles = useCallback(() => {
+    return {
+      diets: urlSearchParams.get('diets')?.split(',') || [],
+      dish: urlSearchParams.get('dish')?.split(',') || [],
+      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+    }
+  }, [location.key])
+
+  const getSelectedFilterIds = useCallback(() => {
+    return {
+      diets: allDietTypes.filter((el) => selectedFilterTitles.diets.includes(el.title)),
+      dish: allDishTypes.filter((el) => selectedFilterTitles.dish.includes(el.title)),
+      cuisine: allCuisineTypes.filter((el) => selectedFilterTitles.cuisine.includes(el.title)),
+    }
+  }, [location.key])
+
+  const [selectedFilterTitles, setSelectedFilterTitles] = useState(getSelectedFilterTitles());
+  const [selectedFilterIds, setSelectedFilterIds] = useState(getSelectedFilterIds());
+
+  useEffect(()=> {
+    setSelectedFilterTitles({
+      diets: urlSearchParams.get('diets')?.split(',') || [],
+      dish: urlSearchParams.get('dish')?.split(',') || [],
+      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+    });
+
+    setSelectedFilterIds({
+      diets: allDietTypes.filter((el) => selectedFilterTitles.diets.includes(el.title)),
+      dish: allDishTypes.filter((el) => selectedFilterTitles.dish.includes(el.title)),
+      cuisine: allCuisineTypes.filter((el) => selectedFilterTitles.cuisine.includes(el.title)),
+    });
+  }, [location.key, dispatch])
+
+  useEffect(() => {
+    dispatch(
+      fetchFilter(selectedFilterIds)
+    );
+
+  }, [selectedFilterIds])
 
   const filtredRecipes = useSelector(selectFilter);
 
@@ -75,29 +113,21 @@ const Catalog = () => {
     navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
   }
 
-  useEffect(() => {
-    dispatch(
-      fetchFilter(
-        'https://mercure-recipe-app-dev.azurewebsites.net/OData/Recipes'
-      )
-    );
-  }, [dispatch]);
-
   return (
     <div className={styles.mainContainer}>
       <aside className={styles.filerContainer}>
         <CatalogFilter
-          dish={dish}
-          cuisine={cuisine}
-          diet={diet}
-          filter={filter}
+          dish={allDishTypes}
+          cuisine={allCuisineTypes}
+          diet={allDietTypes}
+          filter={selectedFilterTitles}
           addToQuery={addToQuery}
           removeFromQuery={removeFromQuery}
         />
       </aside>
       <div className={styles.recipesContainer}>
         <div className={styles.activeTags}>
-          <CatalogTags content={filter} removeTag={removeTag} />
+          <CatalogTags content={selectedFilterTitles} removeTag={removeTag} />
         </div>
         <CatalogContent content={filtredRecipes} showRecipe={showRecipe} />
       </div>
