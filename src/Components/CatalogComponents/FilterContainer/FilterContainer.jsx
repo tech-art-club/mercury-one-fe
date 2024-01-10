@@ -10,8 +10,6 @@ const FilterContainer = ({ content, onCheck, onUncheck, checked, title }) => {
     setShowDropdown(!showDropdown);
   }
 
-  console.log('---', title, '---', content, '---');
-
   function isChechBoxChecked(title) {
     return checked.includes(title);
   }
@@ -37,7 +35,8 @@ const FilterContainer = ({ content, onCheck, onUncheck, checked, title }) => {
               onCheck={onCheck}
               key={el.id}
               content={el}
-              isChecked={isChechBoxChecked(el.title)} />
+              isChecked={isChechBoxChecked(el.title)}
+            />
           ))}
         </div>
       )}

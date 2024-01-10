@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Dashboard from './Main/Main.jsx';
 import Auth from '../Pages/Auth/Auth.jsx';
-import Recipes from './Recipes/Recipes.jsx';
+import Catalog from './Catalog/Catalog.jsx';
 import Recipe from './Recipe/Recipe.jsx';
 import Generator from './Generator/Generator.jsx';
 import Diet from './Diet/Diet.jsx';
@@ -20,7 +20,7 @@ const App = () => {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="recipe/:id" element={<Recipe />} />
-            <Route path="recipes" Component={Recipes} />
+            <Route path="recipes" Component={Catalog} />
             <Route path="generator" element={<Generator />} />
             <Route path="diet" element={<Diet />} />
             <Route path="random_recipe" element={<RandomRecipe />} />
