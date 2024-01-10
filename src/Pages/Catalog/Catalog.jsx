@@ -20,54 +20,48 @@ const Catalog = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
-  const urlSearchParams = new URLSearchParams(location.search);
-
-
   const allDishTypes = useSelector(selectDishType);
   const allDietTypes = useSelector(selectDietaryRecipes);
   const allCuisineTypes = useSelector(selectKitchenType);
 
-
-  const getSelectedFilterTitles = useCallback(() => {
-    return {
-      diets: urlSearchParams.get('diets')?.split(',') || [],
-      dish: urlSearchParams.get('dish')?.split(',') || [],
-      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-    }
-  }, [location.key])
-
-  const getSelectedFilterIds = useCallback(() => {
-    return {
-      diets: allDietTypes.filter((el) => selectedFilterTitles.diets.includes(el.title)),
-      dish: allDishTypes.filter((el) => selectedFilterTitles.dish.includes(el.title)),
-      cuisine: allCuisineTypes.filter((el) => selectedFilterTitles.cuisine.includes(el.title)),
-    }
-  }, [location.key])
-
-  const [selectedFilterTitles, setSelectedFilterTitles] = useState(getSelectedFilterTitles());
-  const [selectedFilterIds, setSelectedFilterIds] = useState(getSelectedFilterIds());
-
-  useEffect(()=> {
-    setSelectedFilterTitles({
-      diets: urlSearchParams.get('diets')?.split(',') || [],
-      dish: urlSearchParams.get('dish')?.split(',') || [],
-      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-    });
-
-    setSelectedFilterIds({
-      diets: allDietTypes.filter((el) => selectedFilterTitles.diets.includes(el.title)),
-      dish: allDishTypes.filter((el) => selectedFilterTitles.dish.includes(el.title)),
-      cuisine: allCuisineTypes.filter((el) => selectedFilterTitles.cuisine.includes(el.title)),
-    });
-  }, [location.key, dispatch])
+  const [allDataLoaded, setAllDataLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(
-      fetchFilter(selectedFilterIds)
-    );
+    if (allDishTypes.length > 0 && allDietTypes.length > 0 && allCuisineTypes.length > 0) {
+      setAllDataLoaded(true);
+    }
+  }, [allDishTypes, allDietTypes, allCuisineTypes]);
 
-  }, [selectedFilterIds])
+  const getSelectedFilter = useCallback(() => {
+    const urlSearchParams = new URLSearchParams(location.search);
+
+    const titles = {
+      diets: urlSearchParams.get('diets')?.split(',') || [],
+      dish: urlSearchParams.get('dish')?.split(',') || [],
+      cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
+    }
+
+    const ids = {
+      diets: allDietTypes.filter((el) => titles.diets.includes(el.title)),
+      dish: allDishTypes.filter((el) => titles.dish.includes(el.title)),
+      cuisine: allCuisineTypes.filter((el) => titles.cuisine.includes(el.title)),
+    }
+
+    return {titles: titles, ids: ids}
+  }, [location.search, allDietTypes, allDishTypes, allCuisineTypes])
+
+  const [selectedFilter, setSelectedFilter] = useState(getSelectedFilter());
+  
+  useEffect(() => {
+    setSelectedFilter(getSelectedFilter());
+  }, [location.key, getSelectedFilter])
+
+  useEffect(() => {
+    if(allDataLoaded)
+      dispatch(
+        fetchFilter(selectedFilter.ids)
+      );
+  }, [selectedFilter, allDataLoaded, dispatch])
 
   const filtredRecipes = useSelector(selectFilter);
 
@@ -81,6 +75,7 @@ const Catalog = () => {
   }
 
   function addToQuery(key, value) {
+    const urlSearchParams = new URLSearchParams(location.search);
     var currentValue = urlSearchParams.get(key);
 
     if (currentValue) {
@@ -93,6 +88,7 @@ const Catalog = () => {
   }
 
   function removeFromQuery(key, value) {
+    const urlSearchParams = new URLSearchParams(location.search);
     const currentValue = urlSearchParams.get(key);
 
     if (currentValue) {
@@ -120,14 +116,14 @@ const Catalog = () => {
           dish={allDishTypes}
           cuisine={allCuisineTypes}
           diet={allDietTypes}
-          filter={selectedFilterTitles}
+          filter={selectedFilter.titles}
           addToQuery={addToQuery}
           removeFromQuery={removeFromQuery}
         />
       </aside>
       <div className={styles.recipesContainer}>
         <div className={styles.activeTags}>
-          <CatalogTags content={selectedFilterTitles} removeTag={removeTag} />
+          <CatalogTags content={selectedFilter.titles} removeTag={removeTag} />
         </div>
         <CatalogContent content={filtredRecipes} showRecipe={showRecipe} />
       </div>

@@ -29,14 +29,8 @@ async function getRecipesODataAsync(filter) {
 
   const response = await axios.get(url);
 
-  return response.data
-
+  return response.data.value;
 }
-
-
-
-//ODataUrl.addFilter('DishTypeRecipes', DishTypeId, values)
-
 
 async function generateRecipeAsync(requestData) {
   try {
