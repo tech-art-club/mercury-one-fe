@@ -23,14 +23,17 @@ const Generator = () => {
   const [availableProductIds, setAvailableProductIds] = useState([]);
   const [desiredProductIds, setDesiredProductIds] = useState([]);
   const [unacceptableProductIds, setUnacceptableProductIds] = useState([]);
-  const [additionalRequirementsInputValue, setAdditionalRequirementsInputValue] = useState('');
+  const [
+    additionalRequirementsInputValue,
+    setAdditionalRequirementsInputValue,
+  ] = useState('');
 
-  const allDiets = useSelector(selectDietaryRecipes)[0];
-  const allKitchenTypes = useSelector(selectKitchenType)[0];
-  const allDishTypes = useSelector(selectDishType)[0];
+  const allDiets = useSelector(selectDietaryRecipes);
+  const allKitchenTypes = useSelector(selectKitchenType);
+  const allDishTypes = useSelector(selectDishType);
   const allProducts = useSelector(selectProducts);
 
-  function prepareRequestData () {
+  function prepareRequestData() {
     var result = {
       dietIds: dietIds?.map((el) => el.id),
       cuisineIds: cuisineIds?.map((el) => el.id),
@@ -38,22 +41,22 @@ const Generator = () => {
       availableProductIds: availableProductIds?.map((el) => el.id),
       desiredProductIds: desiredProductIds?.map((el) => el.id),
       unacceptableProductIds: unacceptableProductIds?.map((el) => el.id),
-      additionalRequirements: additionalRequirementsInputValue
+      additionalRequirements: additionalRequirementsInputValue,
     };
 
     return result;
-  };
+  }
 
   async function sendPostRequest() {
-      setLoading(true);
-      const requestData = prepareRequestData();
-      const recipeId = await generateRecipeAsync(requestData);
+    setLoading(true);
+    const requestData = prepareRequestData();
+    const recipeId = await generateRecipeAsync(requestData);
 
-      handleAddRecipeID(dispatch, recipeId);
-    
-      setLoading(false);
-      console.log(recipeId);
-      navigate(`/recipe/${recipeId}`);
+    handleAddRecipeID(dispatch, recipeId);
+
+    setLoading(false);
+
+    navigate(`/recipe/${recipeId}`);
   }
 
   function addAvailableProductIds(obj) {
@@ -155,7 +158,9 @@ const Generator = () => {
             type="text"
             placeholder="Additional Requirements"
             value={additionalRequirementsInputValue}
-            onChange={(e) => setAdditionalRequirementsInputValue(e.target.value)}
+            onChange={(e) =>
+              setAdditionalRequirementsInputValue(e.target.value)
+            }
           />
           <button
             className={styles.generateRecipeBtn}

@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from './InputFilter.module.css';
 
-const InputFilter = React.memo(({ content, isChecked }) => {
-  function handleCheckbox() {
-    isChecked(content);
+const InputFilter = React.memo(({ onCheck, onUncheck, content, isChecked }) => {
+  function handleCheckbox(e) {
+    if(isChecked){
+      onUncheck(content.title);
+    }
+    else{
+      onCheck(content.title);
+    }
   }
 
   return (
@@ -12,8 +17,8 @@ const InputFilter = React.memo(({ content, isChecked }) => {
         type="checkbox"
         id={content.id}
         name={content.title}
-        checked={content.checked}
-        onChange={(e) => handleCheckbox()}
+        checked={isChecked}
+        onChange={handleCheckbox}
       />
       <label htmlFor={content.id}>{content.title}</label>
     </div>

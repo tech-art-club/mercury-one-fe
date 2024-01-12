@@ -2,15 +2,88 @@ import axios from 'axios';
 
 const baseUrl = 'https://mercure-recipe-app-dev.azurewebsites.net/';
 
-async function generateRecipeAsync(requestData) {
-    try {
-      const url = `${baseUrl}Recipes/generate?withImage=true`;
-      const response = await axios.post(url, requestData);
+async function getRecipesODataAsync(filter) {
+  let filterParam = '';
+  let expandParam = '';
 
-      return response.data;
-    } catch (error) {
-      console.error('Ошибка при отправке POST-запроса:', error);
-    } 
+  if (filter.diets.length > 0) {
+    expandParam = expandParam + 'DietRecipes';
+    filter.diets.forEach((element, index) => {
+      filterParam =
+        filterParam + `DietRecipes/any(i: i/DietId eq ${element.id})`;
+
+      if (index < filter.diets.length - 1) {
+        filterParam = filterParam + ' and ';
+      }
+    });
+  }
+
+  if (filter.dish.length > 0) {
+    if (expandParam) {
+      expandParam = expandParam + ',DishTypeRecipes ';
+      filter.dish.forEach((element) => {
+        filterParam =
+          filterParam +
+          ' and ' +
+          `DishTypeRecipes /any(i: i/DishTypeId eq ${element.id})`;
+      });
+    } else {
+      expandParam = expandParam + 'DishTypeRecipes ';
+      filter.dish.forEach((element, index) => {
+        filterParam =
+          filterParam +
+          `DishTypeRecipes /any(i: i/DishTypeId eq ${element.id})`;
+
+        if (index < filter.dish.length - 1) {
+          filterParam = filterParam + ' and ';
+        }
+      });
+    }
+  }
+
+  if (filter.cuisine.length > 0) {
+    if (expandParam) {
+      expandParam = expandParam + ',CuisineRecipes';
+      filter.cuisine.forEach((element) => {
+        filterParam =
+          filterParam +
+          ' and ' +
+          `CuisineRecipes/any(i: i/CuisineId eq ${element.id})`;
+      });
+    } else {
+      expandParam = expandParam + 'CuisineRecipes';
+      filter.cuisine.forEach((element, index) => {
+        filterParam =
+          filterParam + `CuisineRecipes/any(i: i/CuisineId eq ${element.id})`;
+
+        if (index < filter.cuisine.length - 1) {
+          filterParam = filterParam + ' and ';
+        }
+      });
+    }
+  }
+
+  let url = '';
+  if (filterParam && expandParam) {
+    url = `${baseUrl}OData/Recipes?$filter=${filterParam}&$expand=${expandParam}`;
+  } else {
+    url = `${baseUrl}OData/Recipes`;
+  }
+
+  const response = await axios.get(url);
+
+  return response.data.value;
 }
 
-export { generateRecipeAsync };
+async function generateRecipeAsync(requestData) {
+  try {
+    const url = `${baseUrl}Recipes/generate?withImage=true`;
+    const response = await axios.post(url, requestData);
+
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при отправке POST-запроса:', error);
+  }
+}
+
+export { generateRecipeAsync, getRecipesODataAsync };

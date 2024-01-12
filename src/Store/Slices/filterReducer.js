@@ -1,14 +1,11 @@
-import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {getRecipesODataAsync} from '../../Clients/RecipeHttpClient/RecipeHttpClient'
 
 const initialState = [];
 
 export const fetchFilter = createAsyncThunk(
   'filter/fetchFilter',
-  async (url) => {
-    const res = await axios.get(url);
-    return res.data;
-  }
+  getRecipesODataAsync
 );
 
 const filterSlice = createSlice({
@@ -17,11 +14,12 @@ const filterSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchFilter.fulfilled, (state, action) => {
+
       return action.payload;
     });
   },
 });
 
-export const selectFilter = (state) => state.filter.value;
+export const selectFilter = (state) => state.filter;
 
 export default filterSlice.reducer;

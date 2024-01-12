@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import SelectedTag from '../SelectedTag/SelectedTag';
 import styles from './InputTags.module.css';
 import InputTagsDropdown from './InputTagsDropdown';
-import OutsideClickHandler from '../../Hocs/OutsideClickHandler'
+import OutsideClickHandler from '../../Hocs/OutsideClickHandler';
 
 const InputTags = ({
   addTag,
@@ -25,12 +25,12 @@ const InputTags = ({
 
   const onOutsideClick = () => {
     setShowDropdown(false);
-  }
+  };
 
   const onInsideClick = () => {
     setShowDropdown(true);
     inputRef.current.focus();
-  }
+  };
 
   return (
     <div className={styles.inputContainer}>
@@ -41,13 +41,12 @@ const InputTags = ({
             activeTags?.map((el) => (
               <SelectedTag
                 key={el.id}
-                content={el}
-                titleFieldPath={titleFieldPath}
+                content={{ key: el.id, value: el[titleFieldPath] }}
                 removeTag={removeTag}
               />
             ))}
           <input
-            ref = {inputRef}
+            ref={inputRef}
             type="text"
             placeholder="enter your tag"
             className={styles.generatorInput}
@@ -55,17 +54,22 @@ const InputTags = ({
             onChange={(e) => setInputValue(e.target.value)}
           />
         </div>
-        {showDropdown &&
+        {showDropdown && (
           <InputTagsDropdown
             itemsDropdownStyle={styles.dropdownSearch}
             tagsDropdownStyle={styles.dropdown}
-            content={allContent.filter((el) => !activeTags.some(activeEl => activeEl.id === el.id))}
-            addTag={(tag) => {addTag(tag); setInputValue('')}}
+            content={allContent.filter(
+              (el) => !activeTags.some((activeEl) => activeEl.id === el.id)
+            )}
+            addTag={(tag) => {
+              addTag(tag);
+              setInputValue('');
+            }}
             inputValue={inputValue}
             titleFieldPath={titleFieldPath}
             maxQuantity={maxQuantity}
           />
-        }
+        )}
       </OutsideClickHandler>
     </div>
   );

@@ -1,10 +1,10 @@
 import { RxCross2 } from 'react-icons/rx';
 import styles from './SelectedTag.module.css';
 
-const SelectedTag = ({ content, titleFieldPath, removeTag }) => {
+const SelectedTag = ({ content, removeTag }) => {
   return (
     <div className={styles.activeTag} key={content.id}>
-      {content[titleFieldPath]}
+      {content.value}
       <RxCross2
         className={styles.removeActiveTagBtn}
         onClick={(e) => removeTag(content)}
