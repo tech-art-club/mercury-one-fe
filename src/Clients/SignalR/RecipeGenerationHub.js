@@ -1,7 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 
-const URL = "https://localhost:7025/recipe-generation-hub";
-//const URL = "https://mercury-ai-app-dev.azurewebsites.net/recipe-generation-hub";
+const URL = "https://mercury-ai-app-dev.azurewebsites.net/recipe-generation-hub";
 
 class Connector {
     constructor() {
@@ -10,7 +9,7 @@ class Connector {
             .withAutomaticReconnect()
             .build();
         this.connection.start().catch(err => document.write(err));
-
+        
         this.events = (onMessageReceived) => {
             this.connection.on(this.methods.ReceiveConnectionId, (message) => {
                 onMessageReceived(this.methods.ReceiveConnectionId, message);
@@ -21,7 +20,7 @@ class Connector {
             });
         };
     }
-    
+
     methods = {
         ReceiveConnectionId: 'ReceiveConnectionId',
         ReciveRecipePart: 'ReciveRecipePart',

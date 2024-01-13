@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import MoonLoader from 'react-spinners/MoonLoader';
 import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
 import { selectProducts } from '../../Store/Slices/productsReducer';
 import {
@@ -11,9 +10,12 @@ import {
 } from '../../Store/Slices/mainPageReducer';
 import InputTags from '../../Components/GeneratorComponents/InputTags/InputTags';
 import styles from './Generator.module.css';
-import { generateRecipeAsync } from '../../Clients/Http/RecipeHttpClient';
+import Connector from '../../Clients/SignalR/RecipeGenerationHub'
+import RecipeAsStream from '../../Components/AsStream/RecipeAsStream';
+import { generateRecipeWithStreamAsync } from '../../Clients/Http/RecipeHttpClient'
 
 const Generator = () => {
+  const connector = Connector();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -47,12 +49,10 @@ const Generator = () => {
   async function sendPostRequest() {
       setLoading(true);
       const requestData = prepareRequestData();
-      
-      const recipeId = await generateRecipeAsync(requestData);
+
+      const recipeId = await generateRecipeWithStreamAsync(requestData, connector.connection.connectionId);
 
       handleAddRecipeID(dispatch, recipeId);
-    
-      setLoading(false);
 
       navigate(`/recipe/${recipeId}`);
   }
@@ -167,16 +167,7 @@ const Generator = () => {
         </>
       )}
       {loading && (
-        <div className={styles.loadingContainer}>
-          <MoonLoader
-            size={150}
-            color={'#26bc12'}
-            loading={loading}
-            speedMultiplier={0.5}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
+        <RecipeAsStream methods={connector.methods} events={connector.events}/>
       )}
     </div>
   );

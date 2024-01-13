@@ -54,4 +54,4 @@ async function generateRecipeWithStreamAsync(requestData, connectioinId) {
   }
 }
 
-export { generateRecipeAsync, getRecipesODataAsync };
+export { generateRecipeAsync, getRecipesODataAsync, generateRecipeWithStreamAsync };
