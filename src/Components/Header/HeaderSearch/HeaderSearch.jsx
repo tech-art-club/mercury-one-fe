@@ -61,12 +61,6 @@ const HeaderSearch = () => {
           titleFieldPath={'Title'}
           addTag={handleFetchedContent}
         />
-        {/*  <div
-          className={styles.pastElement}
-          onClick={(e) => handleFetchedContent(el)}
-        >
-          {el.Title}
-        </div> */}
       </div>
     ));
   }
