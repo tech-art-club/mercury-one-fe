@@ -82,8 +82,19 @@ async function generateRecipeAsync(requestData) {
 
     return response.data;
   } catch (error) {
-    console.error('Ошибка при отправке POST-запроса:', error);
+    console.error('Error when sending POST request:', error);
   }
 }
 
-export { generateRecipeAsync, getRecipesODataAsync };
+async function generateRecipeWithStreamAsync(requestData, connectioinId) {
+  try {
+    const url = `${baseUrl}Recipes/generate/with-stream?connectioinId=${connectioinId}&withImage=true`;
+    const response = await axios.post(url, requestData);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error when sending POST request:', error);
+  }
+}
+
+export { generateRecipeAsync, getRecipesODataAsync, generateRecipeWithStreamAsync };
