@@ -27,7 +27,11 @@ const Catalog = () => {
   const [allDataLoaded, setAllDataLoaded] = useState(false);
 
   useEffect(() => {
-    if (allDishTypes.length > 0 && allDietTypes.length > 0 && allCuisineTypes.length > 0) {
+    if (
+      allDishTypes.length > 0 &&
+      allDietTypes.length > 0 &&
+      allCuisineTypes.length > 0
+    ) {
       setAllDataLoaded(true);
     }
   }, [allDishTypes, allDietTypes, allCuisineTypes]);
@@ -39,29 +43,28 @@ const Catalog = () => {
       diets: urlSearchParams.get('diets')?.split(',') || [],
       dish: urlSearchParams.get('dish')?.split(',') || [],
       cuisine: urlSearchParams.get('cuisine')?.split(',') || [],
-    }
+    };
 
     const ids = {
       diets: allDietTypes.filter((el) => titles.diets.includes(el.title)),
       dish: allDishTypes.filter((el) => titles.dish.includes(el.title)),
-      cuisine: allCuisineTypes.filter((el) => titles.cuisine.includes(el.title)),
-    }
+      cuisine: allCuisineTypes.filter((el) =>
+        titles.cuisine.includes(el.title)
+      ),
+    };
 
-    return {titles: titles, ids: ids}
-  }, [location.search, allDietTypes, allDishTypes, allCuisineTypes])
+    return { titles: titles, ids: ids };
+  }, [location.search, allDietTypes, allDishTypes, allCuisineTypes]);
 
   const [selectedFilter, setSelectedFilter] = useState(getSelectedFilter());
-  
-  useEffect(() => {
-    setSelectedFilter(getSelectedFilter());
-  }, [location.key, getSelectedFilter])
 
   useEffect(() => {
-    if(allDataLoaded)
-      dispatch(
-        fetchFilter(selectedFilter.ids)
-      );
-  }, [selectedFilter, allDataLoaded, dispatch])
+    setSelectedFilter(getSelectedFilter());
+  }, [location.key, getSelectedFilter]);
+
+  useEffect(() => {
+    if (allDataLoaded) dispatch(fetchFilter(selectedFilter.ids));
+  }, [selectedFilter, allDataLoaded, dispatch]);
 
   const filtredRecipes = useSelector(selectFilter);
 

@@ -13,11 +13,6 @@ const InputTags = ({
   maxQuantity,
   titleFieldPath,
 }) => {
-  InputTags.defaultProps = {
-    maxQuantity: 9,
-    titleFieldPath: 'title',
-  };
-
   const [inputValue, setInputValue] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -73,6 +68,11 @@ const InputTags = ({
       </OutsideClickHandler>
     </div>
   );
+};
+
+InputTags.defaultProps = {
+  maxQuantity: 9,
+  titleFieldPath: 'title',
 };
 
 export default InputTags;
