@@ -11,7 +11,7 @@ import {
 } from '../../Store/Slices/mainPageReducer';
 import InputTags from '../../Components/GeneratorComponents/InputTags/InputTags';
 import styles from './Generator.module.css';
-import { generateRecipeAsync } from '../../Clients/RecipeHttpClient/RecipeHttpClient';
+import { generateRecipeAsync } from '../../Clients/Http/RecipeHttpClient';
 
 const Generator = () => {
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ const Generator = () => {
   async function sendPostRequest() {
       setLoading(true);
       const requestData = prepareRequestData();
+      
       const recipeId = await generateRecipeAsync(requestData);
 
       handleAddRecipeID(dispatch, recipeId);

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import {getRecipesODataAsync} from '../../Clients/RecipeHttpClient/RecipeHttpClient'
+import {getRecipesODataAsync} from '../../Clients/Http/RecipeHttpClient'
 
 const initialState = [];
 
