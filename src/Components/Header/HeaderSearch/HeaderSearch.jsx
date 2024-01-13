@@ -5,6 +5,7 @@ import axios from 'axios';
 import { SlMagnifier } from 'react-icons/sl';
 import { IoIosClose } from 'react-icons/io';
 import { handleAddRecipeID } from '../../../Helpers/handleAddRecipeID';
+import SearchItem from '../../GeneratorComponents/SearchItem/SearchItem';
 import styles from './HeaderSearch.module.css';
 
 const HeaderSearch = () => {
@@ -45,7 +46,7 @@ const HeaderSearch = () => {
     setInputHistory([]);
   }
 
-  function handleFetchedContent(e, el) {
+  function handleFetchedContent(el) {
     setInputHistory([...inputHistory, { Title: el.Title, Id: el.Id }]);
     handleAddRecipeID(dispatch, el.Id);
     navigate(`/recipe/${el.Id}`);
@@ -55,12 +56,11 @@ const HeaderSearch = () => {
   function showFetchedContent() {
     return fetchedValue.map((el, i) => (
       <div className={styles.pastSearch} key={i}>
-        <div
-          className={styles.pastElement}
-          onClick={(e) => handleFetchedContent(e, el)}
-        >
-          {el.Title}
-        </div>
+        <SearchItem
+          content={el}
+          titleFieldPath={'Title'}
+          addTag={handleFetchedContent}
+        />
       </div>
     ));
   }

@@ -64,7 +64,7 @@ const Generator = () => {
   }
   function removeAvailableProductIds(obj) {
     setAvailableProductIds(
-      availableProductIds.filter((el) => el.id !== obj.id)
+      availableProductIds.filter((el) => el.id !== obj.key)
     );
   }
 
@@ -72,7 +72,7 @@ const Generator = () => {
     setDesiredProductIds([...desiredProductIds, obj]);
   }
   function removeDesiredProductIds(obj) {
-    setDesiredProductIds(desiredProductIds.filter((el) => el.id !== obj.id));
+    setDesiredProductIds(desiredProductIds.filter((el) => el.id !== obj.key));
   }
 
   function addUnacceptableProductIds(obj) {
@@ -80,7 +80,7 @@ const Generator = () => {
   }
   function removeUnacceptableProductIds(obj) {
     setUnacceptableProductIds(
-      unacceptableProductIds.filter((el) => el.id !== obj.id)
+      unacceptableProductIds.filter((el) => el.id !== obj.key)
     );
   }
 
@@ -88,21 +88,21 @@ const Generator = () => {
     setDietIds([...dietIds, obj]);
   }
   function removeDietIds(obj) {
-    setDietIds(dietIds.filter((el) => el.id !== obj.id));
+    setDietIds(dietIds.filter((el) => el.id !== obj.key));
   }
 
   function addCuisineIds(obj) {
     setCuisineIds([...cuisineIds, obj]);
   }
   function removeCuisineIds(obj) {
-    setCuisineIds(cuisineIds.filter((el) => el.id !== obj.id));
+    setCuisineIds(cuisineIds.filter((el) => el.id !== obj.key));
   }
 
   function addDishTypeIds(obj) {
     setDishTypeIds([...dishTypeIds, obj]);
   }
   function removeDishTypeIds(obj) {
-    setDishTypeIds(dishTypeIds.filter((el) => el.id !== obj.id));
+    setDishTypeIds(dishTypeIds.filter((el) => el.id !== obj.key));
   }
 
   return (
