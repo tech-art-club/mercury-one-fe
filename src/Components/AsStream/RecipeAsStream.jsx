@@ -1,10 +1,12 @@
 import styles from '../../Pages/Recipe/Recipe.module.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import parseRecipe from '../../Helpers/parseRecipe'
 import TextWithTypingEffect from '../TextBoxes/TextWithTypingEffect'
 
 const RecipeAsStream = ({ methods, events }) => {
     const [recipe, setRecipe] = useState({ Description: '', Title: '' });
+
+    const recipeRef = useRef(recipe);
 
     useEffect(() => {
         events((method, messageFromSignal) => {
@@ -12,12 +14,15 @@ const RecipeAsStream = ({ methods, events }) => {
                 let recipeJson = parseRecipe(messageFromSignal)
 
                 if (recipeJson !== false) {
-                    console.log(recipeJson)
-                    setRecipe(Object.assign({}, recipe, recipeJson))
+                    setRecipe(Object.assign({}, recipeRef.current, recipeJson))
                 }
             }
         });
-    }, [setRecipe]);
+    }, [setRecipe, events, methods.ReciveRecipePart]);
+
+    useEffect(() => {
+        recipeRef.current = recipe;
+    }, [recipe])
 
     return (
         <div className={styles.recipeContainer}>
@@ -33,8 +38,13 @@ const RecipeAsStream = ({ methods, events }) => {
                         Array.isArray(recipe.Products) ?
                             recipe.Products?.map((el, index) => (
                                 <div className={styles.product} key={index}>
-                                    <TextWithTypingEffect textToType={el} />
-                                    <p>100gr</p>
+                                    <TextWithTypingEffect textToType={el.Name? el.Name : ''} />
+                                    <span>
+                                        <TextWithTypingEffect textToType={el.Quantity? `${el.Quantity}` : ''} />
+                                    </span>
+                                    <span>
+                                        <TextWithTypingEffect textToType={el.Measurement? el.Measurement : ''} />
+                                    </span>
                                 </div>
                             )) : ''}
                 </div>
@@ -79,8 +89,8 @@ const RecipeAsStream = ({ methods, events }) => {
                     Array.isArray(recipe.CookingSteps) ?
                         recipe.CookingSteps
                             ?.sort((a, b) => a.StepNumber - b.StepNumber)
-                            .map((el) => (
-                                <div key={el.id}>
+                            .map((el, index) => (
+                                <div key={index}>
                                     <div className={styles.step}>Step {el.StepNumber}</div>
                                     <div className={styles.stepDescription}>
                                         {el.Description? <TextWithTypingEffect textToType={el.Description} /> : ''}
