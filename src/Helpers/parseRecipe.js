@@ -53,6 +53,8 @@ function parseRecipe(message) {
         }
     }
     try {
+        console.log(message)
+
         let json = JSON.parse(message)
 
         return json;
