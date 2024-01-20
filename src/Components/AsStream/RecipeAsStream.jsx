@@ -2,9 +2,17 @@ import styles from '../../Pages/Recipe/Recipe.module.css';
 import React, { useEffect, useRef, useState } from 'react';
 import parseRecipe from '../../Helpers/parseRecipe'
 import TextWithTypingEffect from '../TextBoxes/TextWithTypingEffect'
+import { PieChart, pieChartDefaultProps } from 'react-minimal-pie-chart';
+
+const defaultLabelStyle = {
+    fontSize: '5px',
+    fontFamily: 'sans-serif',
+  };
+  const shiftSize = 1;
+  
 
 const RecipeAsStream = ({ methods, events }) => {
-    const [recipe, setRecipe] = useState({ Description: '', Title: '' });
+    const [recipe, setRecipe] = useState({ Description: '', Title: '', CalorieContent: 1, Proteins: 1, Fats: 1, Carbohydrates: 1 });
 
     const recipeRef = useRef(recipe);
 
@@ -38,12 +46,12 @@ const RecipeAsStream = ({ methods, events }) => {
                         Array.isArray(recipe.Products) ?
                             recipe.Products?.map((el, index) => (
                                 <div className={styles.product} key={index}>
-                                    <TextWithTypingEffect textToType={el.Name? el.Name : ''} />
+                                    <TextWithTypingEffect textToType={el.Name ? el.Name : ''} />
                                     <span>
-                                        <TextWithTypingEffect textToType={el.Quantity? `${el.Quantity}` : ''} />
+                                        <TextWithTypingEffect textToType={el.Quantity ? `${el.Quantity}` : ''} />
                                     </span>
                                     <span>
-                                        <TextWithTypingEffect textToType={el.Measurement? el.Measurement : ''} />
+                                        <TextWithTypingEffect textToType={el.Measurement ? el.Measurement : ''} />
                                     </span>
                                 </div>
                             )) : ''}
@@ -63,18 +71,18 @@ const RecipeAsStream = ({ methods, events }) => {
                     <div className={styles.dishType}>
                         Dish type: {
                             Array.isArray(recipe.DishType) ?
-                                recipe.DishType?.map((el, index) => 
-                                <span key={index}>
-                                    <TextWithTypingEffect textToType={el} />
+                                recipe.DishType?.map((el, index) =>
+                                    <span key={index}>
+                                        <TextWithTypingEffect textToType={el} />
                                     </span>) : ''
                         }
                     </div>
                     <div className={styles.diet}>
                         Diet: {
                             Array.isArray(recipe.Diet) ?
-                                recipe.Diet?.map((el, index) => 
-                                <span key={index}>
-                                    <TextWithTypingEffect textToType={el} />
+                                recipe.Diet?.map((el, index) =>
+                                    <span key={index}>
+                                        <TextWithTypingEffect textToType={el} />
                                     </span>) : ''
                         }
                     </div>
@@ -84,6 +92,30 @@ const RecipeAsStream = ({ methods, events }) => {
                     <TextWithTypingEffect textToType={recipe.Description} />
                 </div>
             </div>
+            <div style={{ height: '200px', display: 'flex' }}>
+          <span>
+            <PieChart
+              data={[
+                { title: 'Proteins', value: recipe.proteins, color: '#0000FF' },
+                { title: 'Fats', value: recipe.fats, color: '#FFA500' },
+                { title: 'Carbohydrates', value: recipe.carbohydrates, color: '#6A2135' },
+              ]}
+              radius={pieChartDefaultProps.radius - shiftSize}
+              segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
+              label={({ dataEntry }) => dataEntry.value}
+              labelStyle={{
+                ...defaultLabelStyle,
+              }}
+            />
+          </span>
+          <span>
+            <div>100 grams of recipe</div>
+            <div>calories: {recipe.calorieContent} kcal</div>
+            <div>proteins: {recipe.proteins} grams</div>
+            <div>fats: {recipe.fats} grams</div>
+            <div>carbohydrates: {recipe.carbohydrates} grams</div>
+          </span>
+        </div>
             <div className={styles.cookingSteps}>
                 {
                     Array.isArray(recipe.CookingSteps) ?
@@ -93,7 +125,7 @@ const RecipeAsStream = ({ methods, events }) => {
                                 <div key={index}>
                                     <div className={styles.step}>Step {el.StepNumber}</div>
                                     <div className={styles.stepDescription}>
-                                        {el.Description? <TextWithTypingEffect textToType={el.Description} /> : ''}
+                                        {el.Description ? <TextWithTypingEffect textToType={el.Description} /> : ''}
                                     </div>
                                 </div>
                             )) : ''}
