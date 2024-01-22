@@ -96,9 +96,9 @@ const RecipeAsStream = ({ methods, events }) => {
           <span>
             <PieChart
               data={[
-                { title: 'Proteins', value: recipe.proteins, color: '#0000FF' },
-                { title: 'Fats', value: recipe.fats, color: '#FFA500' },
-                { title: 'Carbohydrates', value: recipe.carbohydrates, color: '#6A2135' },
+                { title: 'Proteins', value: recipe.Proteins, color: '#0000FF' },
+                { title: 'Fats', value: recipe.Fats, color: '#FFA500' },
+                { title: 'Carbohydrates', value: recipe.Carbohydrates, color: '#6A2135' },
               ]}
               radius={pieChartDefaultProps.radius - shiftSize}
               segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
@@ -110,10 +110,10 @@ const RecipeAsStream = ({ methods, events }) => {
           </span>
           <span>
             <div>100 grams of recipe</div>
-            <div>calories: {recipe.calorieContent} kcal</div>
-            <div>proteins: {recipe.proteins} grams</div>
-            <div>fats: {recipe.fats} grams</div>
-            <div>carbohydrates: {recipe.carbohydrates} grams</div>
+            <div>calories: {recipe.CalorieContent} kcal</div>
+            <div>proteins: {recipe.Proteins} grams</div>
+            <div>fats: {recipe.Fats} grams</div>
+            <div>carbohydrates: {recipe.Carbohydrates} grams</div>
           </span>
         </div>
             <div className={styles.cookingSteps}>
