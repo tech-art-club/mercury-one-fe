@@ -6,8 +6,7 @@ import { useEffect, useState } from 'react';
 const Recipe = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
-
-  
+  console.log(recipe);
 
   useEffect(() => {
     const fetchRecipe = async (recipeId) => {

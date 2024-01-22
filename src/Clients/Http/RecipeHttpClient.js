@@ -97,4 +97,8 @@ async function generateRecipeWithStreamAsync(requestData, connectioinId) {
   }
 }
 
-export { generateRecipeAsync, getRecipesODataAsync, generateRecipeWithStreamAsync };
+export {
+  generateRecipeAsync,
+  getRecipesODataAsync,
+  generateRecipeWithStreamAsync,
+};

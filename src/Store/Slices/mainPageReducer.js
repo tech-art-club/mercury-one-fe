@@ -2,17 +2,23 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
-    activePlaylist: [],
-    dietaryRecipes: [],
-    kitchenType: [],
-    dishType: [],
+  activePlaylist: [],
+  dietaryRecipes: [],
+  kitchenType: [],
+  dishType: [],
 };
 
 export const fetchActivePlaylist = createAsyncThunk(
   'mainPage/fetchActivePlaylist',
   async (url) => {
-    const res = await axios.get(url);
+    const accessToken = localStorage.getItem('access');
+    const headers = {};
 
+    if (accessToken) {
+      headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    const res = await axios.get(url, { headers });
     return res.data;
   }
 );
@@ -20,8 +26,14 @@ export const fetchActivePlaylist = createAsyncThunk(
 export const fetchDietaryRecipes = createAsyncThunk(
   'mainPage/fetchDietaryRecipes',
   async (url) => {
-    const res = await axios.get(url);
+    const accessToken = localStorage.getItem('access');
+    const headers = {};
 
+    if (accessToken) {
+      headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    const res = await axios.get(url, { headers });
     return res.data;
   }
 );
@@ -29,8 +41,14 @@ export const fetchDietaryRecipes = createAsyncThunk(
 export const fetchKitchenType = createAsyncThunk(
   'mainPage/fetchKitchenType',
   async (url) => {
-    const res = await axios.get(url);
+    const accessToken = localStorage.getItem('access');
+    const headers = {};
 
+    if (accessToken) {
+      headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    const res = await axios.get(url, { headers });
     return res.data;
   }
 );
@@ -38,8 +56,14 @@ export const fetchKitchenType = createAsyncThunk(
 export const fetchDishType = createAsyncThunk(
   'mainPage/fetchDishType',
   async (url) => {
-    const res = await axios.get(url);
-    
+    const accessToken = localStorage.getItem('access');
+    const headers = {};
+
+    if (accessToken) {
+      headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
+    const res = await axios.get(url, { headers });
     return res.data;
   }
 );
@@ -64,10 +88,8 @@ const mainPageSlice = createSlice({
   },
 });
 
-export const selectActivePlaylist = (state) =>
-  state.mainPage?.activePlaylist;
-export const selectDietaryRecipes = (state) =>
-  state.mainPage?.dietaryRecipes;
+export const selectActivePlaylist = (state) => state.mainPage?.activePlaylist;
+export const selectDietaryRecipes = (state) => state.mainPage?.dietaryRecipes;
 export const selectKitchenType = (state) => state.mainPage?.kitchenType;
 export const selectDishType = (state) => state.mainPage?.dishType;
 

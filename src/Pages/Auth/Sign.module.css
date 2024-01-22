@@ -1,0 +1,45 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 50px;
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 400px;
+  height: 500px;
+  border-radius: 42px;
+  background-color: rgba(108, 110, 113, 1);
+}
+
+.mainContainer h2 {
+  color: white;
+  font-weight: 400;
+}
+
+.mainContainer p {
+  margin-top: 20px;
+  color: white;
+  font-size: 17px;
+}
+
+.input {
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.signBtn {
+  cursor: pointer;
+  width: 170px;
+  height: 50px;
+  padding: 15px;
+  margin-top: 25px;
+  background-color: black;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 17px;
+}
