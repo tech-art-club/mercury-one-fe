@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { navigateFromMainToCatalog } from '../../../Helpers/navigateFromMainToCatalog';
+import { navigateFromMainToCatalog } from '../../../Helpers/navigate';
 import styles from './SingleFilter.module.css';
 
 const SingleFilter = ({ content, type }) => {
