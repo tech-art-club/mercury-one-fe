@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import Header from '../Components/Header/Header';
@@ -19,7 +19,7 @@ const MainLayout = () => {
   //const location = useLocation();
   const token = getLocalStorage('access');
 
-  const setUserInfo = (token) => {
+  const setUserInfo = useCallback((token) => {
     const decoded = jwtDecode(token);
     const userInfo = {
       isAuth: true,
@@ -27,7 +27,7 @@ const MainLayout = () => {
       login: decoded.login,
     };
     return dispatch(setAddUserInfo(userInfo));
-  };
+  }, setAddUserInfo, dispatch);
 
   //from path to login and back
   //hoc or hook ? to auth
