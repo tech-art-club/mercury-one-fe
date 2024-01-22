@@ -16,7 +16,7 @@ import { setAddUserInfo } from '../Store/Slices/authReducer.js';
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  //const location = useLocation();
   const token = getLocalStorage('access');
 
   const setUserInfo = (token) => {
@@ -39,7 +39,7 @@ const MainLayout = () => {
     } else {
       dispatch(setAddUserInfo({ isAuth: false }));
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, setUserInfo]);
 
   useEffect(() => {
     dispatch(
