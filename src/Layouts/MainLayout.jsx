@@ -27,7 +27,7 @@ const MainLayout = () => {
       login: decoded.login,
     };
     return dispatch(setAddUserInfo(userInfo));
-  }, setAddUserInfo, dispatch);
+  }, [dispatch] );
 
   //from path to login and back
   //hoc or hook ? to auth
