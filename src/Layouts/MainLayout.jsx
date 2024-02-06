@@ -29,8 +29,7 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(
       fetchActivePlaylist(
-        /* 'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active' */
-        'https://mercure-recipe-app-dev.azurewebsites.net/TestToken/private'
+        'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active'
       )
     );
     dispatch(
