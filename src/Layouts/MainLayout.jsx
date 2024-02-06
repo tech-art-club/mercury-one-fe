@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
+import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Header from '../Components/Header/Header';
 import { getLocalStorage } from '../LocalStorageRepository/LocalStorageRepo.js';
@@ -13,29 +12,15 @@ import {
 } from '../Store/Slices/mainPageReducer.js';
 import { fetchProducts } from '../Store/Slices/productsReducer.js';
 import { setAddUserInfo } from '../Store/Slices/authReducer.js';
+import { handleAddUser } from '../Helpers/handleAddUser.js';
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const token = getLocalStorage('access');
-
-  const setUserInfo = (token) => {
-    const decoded = jwtDecode(token);
-    const userInfo = {
-      isAuth: true,
-      name: decoded.name,
-      login: decoded.login,
-    };
-    return dispatch(setAddUserInfo(userInfo));
-  };
-
-  //from path to login and back
-  //hoc or hook ? to auth
-  //refresh token logic
 
   useEffect(() => {
     if (token) {
-      setUserInfo(token);
+      handleAddUser(token, dispatch);
     } else {
       dispatch(setAddUserInfo({ isAuth: false }));
     }
@@ -44,7 +29,8 @@ const MainLayout = () => {
   useEffect(() => {
     dispatch(
       fetchActivePlaylist(
-        'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active'
+        /* 'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active' */
+        'https://mercure-recipe-app-dev.azurewebsites.net/TestToken/private'
       )
     );
     dispatch(

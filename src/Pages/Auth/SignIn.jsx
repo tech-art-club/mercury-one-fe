@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { navigateFromAuthToMain } from '../../Helpers/navigate';
+import { useDispatch } from 'react-redux';
 import { signIn } from '../../Clients/Http/AuthHtppClient';
 import SignInput from '../../Components/Inputs/SignInput';
 import styles from './Sign.module.css';
 
 const SignIn = ({ toRegister }) => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
   function LogIn() {
-    signIn({ login: login, password: password });
-    navigate(navigateFromAuthToMain()); //past path
+    signIn({ login: login, password: password }, dispatch);
   }
 
   return (

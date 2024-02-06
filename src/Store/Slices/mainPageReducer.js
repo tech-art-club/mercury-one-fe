@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { requestWithTokenValidation } from '../../Helpers/requestWithTokenValidation.js';
+import axios from 'axios';
 
 const initialState = {
   activePlaylist: [],
@@ -11,14 +12,9 @@ const initialState = {
 export const fetchActivePlaylist = createAsyncThunk(
   'mainPage/fetchActivePlaylist',
   async (url) => {
-    const accessToken = localStorage.getItem('access');
-    const headers = {};
-
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-
-    const res = await axios.get(url, { headers });
+    const res = await requestWithTokenValidation((headers) => {
+      return axios.get(url, { headers });
+    });
     return res.data;
   }
 );
@@ -26,14 +22,9 @@ export const fetchActivePlaylist = createAsyncThunk(
 export const fetchDietaryRecipes = createAsyncThunk(
   'mainPage/fetchDietaryRecipes',
   async (url) => {
-    const accessToken = localStorage.getItem('access');
-    const headers = {};
-
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-
-    const res = await axios.get(url, { headers });
+    const res = await requestWithTokenValidation((headers) => {
+      return axios.get(url, { headers });
+    });
     return res.data;
   }
 );
@@ -41,14 +32,9 @@ export const fetchDietaryRecipes = createAsyncThunk(
 export const fetchKitchenType = createAsyncThunk(
   'mainPage/fetchKitchenType',
   async (url) => {
-    const accessToken = localStorage.getItem('access');
-    const headers = {};
-
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-
-    const res = await axios.get(url, { headers });
+    const res = await requestWithTokenValidation((headers) => {
+      return axios.get(url, { headers });
+    });
     return res.data;
   }
 );
@@ -56,14 +42,9 @@ export const fetchKitchenType = createAsyncThunk(
 export const fetchDishType = createAsyncThunk(
   'mainPage/fetchDishType',
   async (url) => {
-    const accessToken = localStorage.getItem('access');
-    const headers = {};
-
-    if (accessToken) {
-      headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-
-    const res = await axios.get(url, { headers });
+    const res = await requestWithTokenValidation((headers) => {
+      return axios.get(url, { headers });
+    });
     return res.data;
   }
 );

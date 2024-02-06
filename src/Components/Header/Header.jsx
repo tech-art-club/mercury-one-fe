@@ -38,7 +38,7 @@ const Header = () => {
         <NavLink to="basket" className={styles.uiLink}>
           <BsBasket3 />
         </NavLink>
-        <NavLink to="auth" className={styles.uiLink}>
+        <NavLink to="account" className={styles.uiLink}>
           <GoPerson />
         </NavLink>
       </div>
