@@ -41,7 +41,7 @@
   margin-top: 20px;
   padding: 10px;
   width: 700px;
-  height: 200px;
+  height: 100px;
   overflow: scroll;
   resize: none;
   font-weight: 400;
@@ -53,22 +53,6 @@
 
 .descriptionTextarea::-webkit-scrollbar {
   width: 0;
-}
-
-.iconClose {
-  cursor: pointer;
-  font-size: 30px;
-  color: lightgray;
-  transition: 0.5s;
-}
-
-.iconCloseWrapper {
-  background-color: white;
-  border: none;
-}
-
-.iconClose:hover {
-  color: slategray;
 }
 
 .uploaderAndProductsWrapper {
