@@ -1,0 +1,10 @@
+.showImageWrapper {
+  width: 400px;
+  height: max-content;
+}
+
+.customImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}

@@ -17,13 +17,11 @@ const tokenIsValid = (token) => {
 const requestWithValidAccessToken = async (request, headers, accessToken) => {
   headers = { Authorization: `Bearer ${accessToken}` };
   const response = await request({ headers });
-  console.log('Успешный GET-запрос:', response);
   return response;
 };
 
 const requestWithoutTokens = async (request, headers) => {
   const response = await request({ headers });
-  console.log('Успешный GET-запрос без токенов:', response);
   localStorage.removeItem('access');
   localStorage.removeItem('refresh');
   return response;
@@ -43,7 +41,6 @@ const requestWithValidRefreshToken = async (request, headers, refreshToken) => {
   headers = { Authorization: `Bearer ${refreshResponse.data.access}` };
 
   const response = await request({ headers });
-  console.log('Успешный GET-запрос после refresh:', response);
   return response;
 };
 
@@ -71,7 +68,6 @@ export const requestWithTokenValidation = async (
 
     return await requestWithoutTokens(request, headers);
   } catch (error) {
-    console.error('Ошибка при выполнении GET-запроса:', error);
     if (isChecked === false && error.response.status === 401) {
       return await requestWithTokenValidation(request, true);
     }

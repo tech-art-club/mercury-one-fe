@@ -40,7 +40,11 @@ const Recipe = () => {
             <div className={styles.servings}>servings: 1 + -</div>
             {recipe.products?.map((el) => (
               <div className={styles.product} key={el.id}>
-                {el.name} <p>100gr</p>
+                <div style={{ width: '50%' }}>{el.name}</div>
+                <div style={{ width: '20%' }}>{el.quantity}</div>
+                <div style={{ width: '30%', textAlign: 'end' }}>
+                  {el.measurement}
+                </div>
               </div>
             ))}
           </div>
@@ -62,30 +66,40 @@ const Recipe = () => {
             {recipe.description}
           </div>
         </div>
-        <div style={{ height: '200px', display: 'flex' }}>
-          <span>
-            <PieChart
-              data={[
-                { title: 'Proteins', value: recipe.proteins, color: '#0000FF' },
-                { title: 'Fats', value: recipe.fats, color: '#FFA500' },
-                { title: 'Carbohydrates', value: recipe.carbohydrates, color: '#6A2135' },
-              ]}
-              radius={pieChartDefaultProps.radius - shiftSize}
-              segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
-              label={({ dataEntry }) => dataEntry.value}
-              labelStyle={{
-                ...defaultLabelStyle,
-              }}
-            />
-          </span>
-          <span>
-            <div>100 grams of recipe</div>
-            <div>calories: {recipe.calorieContent} kcal</div>
-            <div>proteins: {recipe.proteins} grams</div>
-            <div>fats: {recipe.fats} grams</div>
-            <div>carbohydrates: {recipe.carbohydrates} grams</div>
-          </span>
-        </div>
+        {recipe.calorieContent !== 0 && (
+          <div style={{ height: '200px', display: 'flex' }}>
+            <span>
+              <PieChart
+                data={[
+                  {
+                    title: 'Proteins',
+                    value: recipe.proteins,
+                    color: '#0000FF',
+                  },
+                  { title: 'Fats', value: recipe.fats, color: '#FFA500' },
+                  {
+                    title: 'Carbohydrates',
+                    value: recipe.carbohydrates,
+                    color: '#6A2135',
+                  },
+                ]}
+                radius={pieChartDefaultProps.radius - shiftSize}
+                segmentsShift={(index) => (index === 0 ? shiftSize : 0.5)}
+                label={({ dataEntry }) => dataEntry.value}
+                labelStyle={{
+                  ...defaultLabelStyle,
+                }}
+              />
+            </span>
+            <span>
+              <div>100 grams of recipe</div>
+              <div>calories: {recipe.calorieContent} kcal</div>
+              <div>proteins: {recipe.proteins} grams</div>
+              <div>fats: {recipe.fats} grams</div>
+              <div>carbohydrates: {recipe.carbohydrates} grams</div>
+            </span>
+          </div>
+        )}
         <div className={styles.cookingSteps}>
           {recipe.cookingSteps
             ?.sort((a, b) => a.stepNumber - b.stepNumber)

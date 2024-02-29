@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
@@ -10,11 +10,12 @@ import {
 } from '../../Store/Slices/mainPageReducer';
 import InputTags from '../../Components/GeneratorComponents/InputTags/InputTags';
 import styles from './Generator.module.css';
-import Connector from '../../Clients/SignalR/RecipeGenerationHub'
+import Connector from '../../Clients/SignalR/RecipeGenerationHub';
 import RecipeAsStream from '../../Components/AsStream/RecipeAsStream';
-import { generateRecipeWithStreamAsync } from '../../Clients/Http/RecipeHttpClient'
+import { generateRecipeWithStreamAsync } from '../../Clients/Http/RecipeHttpClient';
 
 const Generator = () => {
+  const isUnmountedRef = useRef(false);
   const connector = Connector();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,18 +53,28 @@ const Generator = () => {
   async function sendPostRequest() {
     setLoading(true);
     const requestData = prepareRequestData();
-    const recipeId = await generateRecipeWithStreamAsync(requestData, connector.connection.connectionId);
+    const recipeId = await generateRecipeWithStreamAsync(
+      requestData,
+      connector.connection.connectionId
+    );
 
     handleAddRecipeID(dispatch, recipeId);
 
     setLoading(false);
 
-    navigate(`/recipe/${recipeId}`);
+    if (isUnmountedRef.current === false) {
+      return navigate(`/recipe/${recipeId}`);
+    }
+
+    if (isUnmountedRef.current === true) {
+      return alert('Your recipe is ready');
+    }
   }
 
   function addAvailableProductIds(obj) {
     setAvailableProductIds([...availableProductIds, obj]);
   }
+
   function removeAvailableProductIds(obj) {
     setAvailableProductIds(
       availableProductIds.filter((el) => el.id !== obj.key)
@@ -73,6 +84,7 @@ const Generator = () => {
   function addDesiredProductIds(obj) {
     setDesiredProductIds([...desiredProductIds, obj]);
   }
+
   function removeDesiredProductIds(obj) {
     setDesiredProductIds(desiredProductIds.filter((el) => el.id !== obj.key));
   }
@@ -80,6 +92,7 @@ const Generator = () => {
   function addUnacceptableProductIds(obj) {
     setUnacceptableProductIds([...unacceptableProductIds, obj]);
   }
+
   function removeUnacceptableProductIds(obj) {
     setUnacceptableProductIds(
       unacceptableProductIds.filter((el) => el.id !== obj.key)
@@ -89,6 +102,7 @@ const Generator = () => {
   function addDietIds(obj) {
     setDietIds([...dietIds, obj]);
   }
+
   function removeDietIds(obj) {
     setDietIds(dietIds.filter((el) => el.id !== obj.key));
   }
@@ -96,6 +110,7 @@ const Generator = () => {
   function addCuisineIds(obj) {
     setCuisineIds([...cuisineIds, obj]);
   }
+
   function removeCuisineIds(obj) {
     setCuisineIds(cuisineIds.filter((el) => el.id !== obj.key));
   }
@@ -103,9 +118,16 @@ const Generator = () => {
   function addDishTypeIds(obj) {
     setDishTypeIds([...dishTypeIds, obj]);
   }
+
   function removeDishTypeIds(obj) {
     setDishTypeIds(dishTypeIds.filter((el) => el.id !== obj.key));
   }
+
+  useEffect(() => {
+    return () => {
+      isUnmountedRef.current = true;
+    };
+  }, []);
 
   return (
     <div className={styles.mainContainer}>

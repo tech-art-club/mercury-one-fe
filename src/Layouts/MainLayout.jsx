@@ -11,6 +11,7 @@ import {
   fetchDishType,
 } from '../Store/Slices/mainPageReducer.js';
 import { fetchProducts } from '../Store/Slices/productsReducer.js';
+import { fetchMeasurements } from '../Store/Slices/measurementsReducer.js';
 import { setAddUserInfo } from '../Store/Slices/authReducer.js';
 import { handleAddUser } from '../Helpers/handleAddUser.js';
 
@@ -50,6 +51,11 @@ const MainLayout = () => {
     dispatch(
       fetchProducts(
         'https://mercure-recipe-app-dev.azurewebsites.net/Products/all'
+      )
+    );
+    dispatch(
+      fetchMeasurements(
+        'https://mercure-recipe-app-dev.azurewebsites.net/Measurements/all'
       )
     );
   }, [dispatch]);

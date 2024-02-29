@@ -1,0 +1,23 @@
+.numInput {
+  margin-right: 20px;
+  padding-left: 8px;
+  padding-right: 2px;
+  width: 50px;
+  height: 38px;
+  outline: none;
+  border: 1px solid lightgray;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+.numInput::-webkit-outer-spin-button,
+.numInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numInput:focus {
+  box-shadow: 0 0 0 1.1px #2684ff;
+  outline: 1px solid #2684ff;
+  border-color: #2684ff;
+}

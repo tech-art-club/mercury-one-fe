@@ -1,0 +1,108 @@
+.mainContainer {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.btnSubmit {
+  cursor: pointer;
+  align-self: center;
+  width: 200px;
+  height: 50px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.disabledBtn:disabled {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}
+
+.titleInput {
+  padding: 10px;
+  width: 700px;
+  height: 45px;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 120%;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.descriptionTextarea {
+  margin-top: 20px;
+  padding: 10px;
+  width: 700px;
+  height: 200px;
+  overflow: scroll;
+  resize: none;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 120%;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.descriptionTextarea::-webkit-scrollbar {
+  width: 0;
+}
+
+.iconClose {
+  cursor: pointer;
+  font-size: 30px;
+  color: lightgray;
+  transition: 0.5s;
+}
+
+.iconCloseWrapper {
+  background-color: white;
+  border: none;
+}
+
+.iconClose:hover {
+  color: slategray;
+}
+
+.uploaderAndProductsWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.productsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.quantityInput {
+  margin-right: 20px;
+  padding-left: 8px;
+  padding-right: 2px;
+  width: 50px;
+  height: 38px;
+  outline: none;
+  border: 1px solid lightgray;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantityInput:focus {
+  box-shadow: 0 0 0 1.1px #2684ff;
+  outline: 1px solid #2684ff;
+  border-color: #2684ff;
+}

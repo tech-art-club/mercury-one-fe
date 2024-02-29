@@ -1,0 +1,22 @@
+.productContainer {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.iconClose {
+  cursor: pointer;
+  font-size: 30px;
+  color: lightgray;
+  transition: 0.5s;
+}
+
+.iconCloseWrapper {
+  background-color: white;
+  border: none;
+}
+
+.iconClose:hover {
+  color: slategray;
+}

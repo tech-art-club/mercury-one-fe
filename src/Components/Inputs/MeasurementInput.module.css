@@ -1,0 +1,32 @@
+/* Ваш стиль для выпадающего списка */
+.dropdown {
+  min-width: 50px;
+  width: max-content;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown::-ms-expand {
+  display: none;
+}
+
+.dropdown::before {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Стиль для опций */
+.dropdownOption {
+  transition: background-color 0.3s; /* Анимация изменения цвета фона */
+}
+
+/* Изменение цвета фона при наведении на опцию */
+.dropdownOption:hover {
+  background-color: #6f3f3f;
+}
