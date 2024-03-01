@@ -3,17 +3,19 @@ import CookingStep from '../../../Components/Inputs/CookingStep';
 import styles from './AddCookingStep.module.css';
 
 const AddCookingStep = ({
-  step,
+  content,
   index,
   handleCookingStepChange,
   handleRemoveCookingStep,
+  handleAddCookingStepImage,
   formData,
 }) => {
   return (
     <div className={styles.cookingStepContainer}>
       <CookingStep
-        step={step}
+        content={content}
         index={index}
+        handleAddCookingStepImage={handleAddCookingStepImage}
         handleCookingStepChange={handleCookingStepChange}
       />
       <button

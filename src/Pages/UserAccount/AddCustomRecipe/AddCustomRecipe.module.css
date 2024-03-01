@@ -51,6 +51,21 @@
   margin-bottom: 20px;
 }
 
+.timeContainer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.inputTimeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.timeIcon {
+  font-size: 28px;
+  margin-right: 15px;
+}
+
 .descriptionTextarea::-webkit-scrollbar {
   width: 0;
 }

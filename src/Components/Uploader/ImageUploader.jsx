@@ -33,7 +33,7 @@ const MyDropzone = ({ setFiles }) => (
   />
 );
 
-const MyUploadedFiles = ({ files }) =>
+const MyUploadedFiles = ({ style, files }) =>
   files.map((file) => {
     // Save 'filePath' to your DB, and construct URLs using UrlBuilder:
     const { filePath, accountId } = file;
@@ -48,23 +48,23 @@ const MyUploadedFiles = ({ files }) =>
       },
     });
     return (
-      <div className={styles.showImageWrapper} key={accountId}>
+      <div style={style} key={accountId}>
         <img src={fileUrl} alt="userImage" className={styles.customImage} />
       </div>
     );
   });
 
-const ImageUploader = ({ handleAddImage }) => {
+const ImageUploader = ({ style, index, handleAddImage }) => {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    handleAddImage(files[0]?.fileUrl);
+    handleAddImage(index, files[0]?.fileUrl);
   }, [files]);
 
   return (
     <>
       {files.length ? (
-        <MyUploadedFiles files={files} />
+        <MyUploadedFiles files={files} style={style} />
       ) : (
         <MyDropzone setFiles={setFiles} />
       )}

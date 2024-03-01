@@ -1,7 +1,13 @@
 import { useRef } from 'react';
+import ImageUploader from '../Uploader/ImageUploader';
 import styles from './CookingStep.module.css';
 
-const CookingStep = ({ step, index, handleCookingStepChange }) => {
+const CookingStep = ({
+  content,
+  index,
+  handleCookingStepChange,
+  handleAddCookingStepImage,
+}) => {
   const textareaRef = useRef();
 
   const handleTextareaResize = () => {
@@ -17,10 +23,19 @@ const CookingStep = ({ step, index, handleCookingStepChange }) => {
         placeholder="Enter recipe description"
         className={styles.textarea}
         name={`cookingSteps[${index}].description`}
-        value={step.description}
-        onChange={(e) => handleCookingStepChange(index, e)}
+        value={content.description}
+        onChange={(e) =>
+          handleCookingStepChange(index, 'description', e.target.value)
+        }
         onInput={handleTextareaResize}
       />
+      <div className={styles.uploaderWrapper}>
+        <ImageUploader
+          handleAddImage={handleAddCookingStepImage}
+          index={index}
+          style={{ width: '250px', height: 'max-content' }}
+        />
+      </div>
     </div>
   );
 };

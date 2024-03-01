@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TfiTimer } from 'react-icons/tfi';
 import { useSelector } from 'react-redux';
 import {
   selectDietaryRecipes,
@@ -11,6 +12,7 @@ import { selectProducts } from '../../../Store/Slices/productsReducer';
 import ImageUploader from '../../../Components/Uploader/ImageUploader';
 import AddCategory from './AddCategory';
 import AddProduct from './AddProduct';
+import NumInput from '../../../Components/Inputs/NumInput';
 import FormAddButton from '../../../Components/Buttons/FormAddButton';
 import { postCustomRecipe } from '../../../Clients/Http/RecipePostHttpClient';
 import { imageUrlToBase64 } from '../../../Helpers/imageUrlToBase64';
@@ -35,15 +37,18 @@ const AddCustomRecipe = () => {
       {
         stepNumber: 0,
         description: '',
+        stepImage: '',
       },
     ],
     dietIds: [],
     cuisineIds: [],
     dishTypeIds: [],
+    hours: 0,
+    minutes: 0,
     products: [
       {
         productId: '',
-        /* measurementId: '', */
+        measurementId: '',
         quantity: 0,
       },
     ],
@@ -65,18 +70,16 @@ const AddCustomRecipe = () => {
     }));
   };
 
-  const handleCookingStepChange = (index, e) => {
-    const { name, value } = e.target;
+  const handleCookingStepChange = (index, property, value) => {
     setFormData((prevFormData) => {
-      const updatedCookingSteps = [...prevFormData.cookingSteps];
+      const updatedFormData = { ...prevFormData };
+      const updatedCookingSteps = [...updatedFormData.cookingSteps];
       updatedCookingSteps[index] = {
         ...updatedCookingSteps[index],
-        [name.substring(name.indexOf('.') + 1)]: value,
+        [property]: value,
       };
-      return {
-        ...prevFormData,
-        cookingSteps: updatedCookingSteps,
-      };
+      updatedFormData.cookingSteps = updatedCookingSteps;
+      return updatedFormData;
     });
   };
 
@@ -102,6 +105,7 @@ const AddCustomRecipe = () => {
         {
           stepNumber: prevFormData.cookingSteps.length,
           description: '',
+          stepImage: '',
         },
       ],
     }));
@@ -135,11 +139,38 @@ const AddCustomRecipe = () => {
     });
   };
 
-  const handleAddImage = async (imgUrl) => {
+  const handleAddCookingStepImage = async (index, imgUrl) => {
     try {
-      const base64Image = await imageUrlToBase64(imgUrl);
-      const base64WithoutPrefix = base64Image.split(',')[1];
-      setFormData({ ...formData, image: base64WithoutPrefix });
+      if (imgUrl) {
+        const base64Image = await imageUrlToBase64(imgUrl);
+        const base64WithoutPrefix = base64Image.split(',')[1];
+        setFormData((prevData) => {
+          const updatedCookingSteps = [...prevData.cookingSteps];
+          updatedCookingSteps[index] = {
+            ...updatedCookingSteps[index],
+            stepImage: base64WithoutPrefix,
+          };
+          return {
+            ...prevData,
+            cookingSteps: updatedCookingSteps,
+          };
+        });
+      }
+    } catch (error) {
+      console.error('Ошибка при обработке изображения:', error);
+    }
+  };
+
+  const handleAddImage = async (_, imgUrl) => {
+    try {
+      if (imgUrl) {
+        const base64Image = await imageUrlToBase64(imgUrl);
+        const base64WithoutPrefix = base64Image.split(',')[1];
+        setFormData((prevData) => ({
+          ...prevData,
+          image: base64WithoutPrefix,
+        }));
+      }
     } catch (error) {
       console.error('Ошибка при обработке изображения:', error);
     }
@@ -170,7 +201,10 @@ const AddCustomRecipe = () => {
           onChange={handleInputChange}
         />
         <div className={styles.uploaderAndProductsWrapper}>
-          <ImageUploader handleAddImage={handleAddImage} />
+          <ImageUploader
+            handleAddImage={handleAddImage}
+            style={{ width: '400px', height: 'max-content' }}
+          />
           <div className={styles.productsWrapper}>
             {formData.products.map((_, index) => (
               <AddProduct
@@ -195,6 +229,26 @@ const AddCustomRecipe = () => {
           value={formData.description}
           onChange={handleInputChange}
         />
+        <div className={styles.timeContainer}>
+          <h2 style={{ marginBottom: '20px' }}>Cooking time</h2>
+          <div className={styles.inputTimeContainer}>
+            <TfiTimer className={styles.timeIcon} />
+            <NumInput
+              onChange={handleCategoryChange}
+              name={'hours'}
+              property={'hours'}
+              placeholder={'h'}
+            />
+            <p style={{ marginRight: '10px', marginLeft: '-10px' }}>hours</p>
+            <NumInput
+              onChange={handleCategoryChange}
+              name={'minutes'}
+              property={'minutes'}
+              placeholder={'m'}
+            />
+            <p style={{ marginLeft: '-10px' }}>minutes</p>
+          </div>
+        </div>
         <div>
           <h2>Add category</h2>
           <AddCategory
@@ -204,11 +258,12 @@ const AddCustomRecipe = () => {
             handleCategoryChange={handleCategoryChange}
           />
         </div>
-        {formData.cookingSteps.map((step, index) => (
+        {formData.cookingSteps.map((content, index) => (
           <AddCookingStep
             key={index}
-            step={step}
+            content={content}
             index={index}
+            handleAddCookingStepImage={handleAddCookingStepImage}
             handleCookingStepChange={handleCookingStepChange}
             handleRemoveCookingStep={handleRemoveCookingStep}
             formData={formData}
