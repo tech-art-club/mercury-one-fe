@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTypingEffect } from '../../Hooks/typing-effect';
+import useTypingEffect from '../../Hooks/typing-effect.js';
 
 const TextWithTypingEffect = ({
   textToType,
