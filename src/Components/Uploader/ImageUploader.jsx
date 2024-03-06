@@ -4,13 +4,13 @@ import { UrlBuilder } from '@bytescale/sdk';
 import styles from './ImageUploader.module.css';
 
 const options = {
-  apiKey: 'public_FW25bvF9Cy6UPTUf55e2mVHp66g9', // This is your API key.
+  apiKey: 'public_FW25bwmAyiUWaTrLB9BxDXCypLA5', // This is your API key.
   maxFileCount: 1,
   showFinishButton: true, // Note: You must use 'onUpdate' if you set 'showFinishButton: false' (default).
   mimeTypes: ['image/*'],
   editor: {
     images: {
-      cropShape: 'rect', // "rect" also supported.
+      cropShape: 'rect',
       cropRatio: 1 / 1, // "1" is enforced for "circ".
     },
   },

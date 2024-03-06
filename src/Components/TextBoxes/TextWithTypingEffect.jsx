@@ -1,10 +1,13 @@
 import React from 'react';
-import { useTypingEffect } from '../../hooks/typing-effect';
+import { useTypingEffect } from '../../Hooks/typing-effect';
 
-const TextWithTypingEffect = ({ textToType, interKeyStrokeDurationInMs = 100 }) => {
-    const text = useTypingEffect(textToType, interKeyStrokeDurationInMs)
+const TextWithTypingEffect = ({
+  textToType,
+  interKeyStrokeDurationInMs = 100,
+}) => {
+  const text = useTypingEffect(textToType, interKeyStrokeDurationInMs);
 
-    return <div>{text}</div>
-}
+  return <div>{text}</div>;
+};
 
 export default TextWithTypingEffect;
