@@ -1,0 +1,9 @@
+.mainContainer {
+  display: flex;
+  padding: 50px;
+}
+
+.asideContainer {
+  display: flex;
+  flex-direction: column;
+}

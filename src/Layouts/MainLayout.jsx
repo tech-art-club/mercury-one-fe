@@ -1,6 +1,5 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
 import Header from '../Components/Header/Header';
 import { getLocalStorage } from '../LocalStorageRepository/LocalStorageRepo.js';
@@ -12,34 +11,21 @@ import {
   fetchDishType,
 } from '../Store/Slices/mainPageReducer.js';
 import { fetchProducts } from '../Store/Slices/productsReducer.js';
+import { fetchMeasurements } from '../Store/Slices/measurementsReducer.js';
 import { setAddUserInfo } from '../Store/Slices/authReducer.js';
+import { handleAddUser } from '../Helpers/handleAddUser.js';
 
 const MainLayout = () => {
   const dispatch = useDispatch();
-  //const location = useLocation();
   const token = getLocalStorage('access');
-
-  const setUserInfo = useCallback((token) => {
-    const decoded = jwtDecode(token);
-    const userInfo = {
-      isAuth: true,
-      name: decoded.name,
-      login: decoded.login,
-    };
-    return dispatch(setAddUserInfo(userInfo));
-  }, [dispatch] );
-
-  //from path to login and back
-  //hoc or hook ? to auth
-  //refresh token logic
 
   useEffect(() => {
     if (token) {
-      setUserInfo(token);
+      handleAddUser(token, dispatch);
     } else {
       dispatch(setAddUserInfo({ isAuth: false }));
     }
-  }, [dispatch, token, setUserInfo]);
+  }, [dispatch, token]);
 
   useEffect(() => {
     dispatch(
@@ -65,6 +51,11 @@ const MainLayout = () => {
     dispatch(
       fetchProducts(
         'https://mercure-recipe-app-dev.azurewebsites.net/Products/all'
+      )
+    );
+    dispatch(
+      fetchMeasurements(
+        'https://mercure-recipe-app-dev.azurewebsites.net/Measurements/all'
       )
     );
   }, [dispatch]);

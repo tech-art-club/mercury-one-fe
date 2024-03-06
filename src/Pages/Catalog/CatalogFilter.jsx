@@ -1,4 +1,4 @@
-import FilterContainer from '../../Components/CatalogComponents/FilterContainer/FilterContainer';
+import CatalogFilterContainer from '../../Components/Filters/CatalogFilterContainer';
 
 const CatalogFilter = ({
   dish,
@@ -10,7 +10,7 @@ const CatalogFilter = ({
 }) => {
   return (
     <>
-      <FilterContainer
+      <CatalogFilterContainer
         content={dish}
         title={'Type of dish'}
         onCheck={(title) => {
@@ -21,7 +21,7 @@ const CatalogFilter = ({
         }}
         checked={filter.dish}
       />
-      <FilterContainer
+      <CatalogFilterContainer
         content={cuisine}
         title={'World cuisine'}
         onCheck={(title) => {
@@ -32,7 +32,7 @@ const CatalogFilter = ({
         }}
         checked={filter.cuisine}
       />
-      <FilterContainer
+      <CatalogFilterContainer
         content={diet}
         title={'Food type'}
         onCheck={(title) => {

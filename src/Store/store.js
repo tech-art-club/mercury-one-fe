@@ -4,6 +4,7 @@ import recipesReducer from './Slices/recipesReducer';
 import productsReducer from './Slices/productsReducer';
 import filterReducer from './Slices/filterReducer';
 import authReducer from './Slices/authReducer';
+import measurementsReducer from './Slices/measurementsReducer';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     products: productsReducer,
     filter: filterReducer,
     auth: authReducer,
+    measurements: measurementsReducer,
   },
 });
 

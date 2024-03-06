@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bytescale/sdk": "^3.31.1",
+    "@bytescale/upload-widget-react": "^4.18.0",
     "@microsoft/signalr": "^8.0.0",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
-    "jwt-decode": "^4.0.0",
     "install": "^0.13.0",
+    "jwt-decode": "^4.0.0",
     "npm": "^10.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,7 +21,10 @@
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
+    "react-toastify": "^10.0.4",
+    "uploader": "^3.48.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
