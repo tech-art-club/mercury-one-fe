@@ -5,8 +5,15 @@ import axios from 'axios';
 import { SlMagnifier } from 'react-icons/sl';
 import { IoIosClose } from 'react-icons/io';
 import { handleAddRecipeID } from '../../../Helpers/handleAddRecipeID';
-import SearchItem from '../../GeneratorComponents/SearchItem/SearchItem';
 import styles from './HeaderSearch.module.css';
+
+const SearchItem = ({ content, titleFieldPath, addTag }) => {
+  return (
+    <div className={styles.searchItem} onClick={(e) => addTag(content)}>
+      {content[titleFieldPath]}
+    </div>
+  );
+};
 
 const HeaderSearch = () => {
   const [inputHistory, setInputHistory] = useState([]);

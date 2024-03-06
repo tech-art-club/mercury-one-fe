@@ -1,8 +1,8 @@
-import SingleFiltredRecipe from '../../Components/CatalogComponents/SingleFiltredRecipe/SingleFiltredRecipe';
+import RecipeCard from '../../Components/Cards/RecipeCard';
 
 const CatalogContent = ({ content, showRecipe }) => {
   return content?.map((el) => (
-    <SingleFiltredRecipe key={el.Id} content={el} showRecipe={showRecipe} />
+    <RecipeCard key={el.Id} content={el} showRecipe={showRecipe} />
   ));
 };
 

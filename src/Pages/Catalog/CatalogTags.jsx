@@ -1,4 +1,4 @@
-import SelectedTag from '../../Components/GeneratorComponents/SelectedTag/SelectedTag';
+import SelectedTag from '../../Components/Tags/SelectedTag';
 
 const CatalogTags = ({ content, removeTag }) => {
   return (

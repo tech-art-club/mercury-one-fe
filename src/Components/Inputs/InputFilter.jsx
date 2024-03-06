@@ -1,18 +1,16 @@
 import React from 'react';
-import styles from './InputFilter.module.css';
 
 const InputFilter = React.memo(({ onCheck, onUncheck, content, isChecked }) => {
   function handleCheckbox(e) {
-    if(isChecked){
+    if (isChecked) {
       onUncheck(content.title);
-    }
-    else{
+    } else {
       onCheck(content.title);
     }
   }
 
   return (
-    <div className={styles.checkboxInput}>
+    <div>
       <input
         type="checkbox"
         id={content.id}

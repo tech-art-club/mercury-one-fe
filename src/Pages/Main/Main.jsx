@@ -10,9 +10,9 @@ import {
   selectKitchenType,
 } from '../../Store/Slices/mainPageReducer';
 
-import Vitrine from '../../Components/MainPageComponents/Vitrine/Vitrine';
-import SingleFilter from '../../Components/MainPageComponents/SingleContent/SingleFilter';
-import SingleRecipe from '../../Components/MainPageComponents/SingleContent/SingleRecipe';
+import Vitrine from './Vitrine.jsx';
+import PreFilterCard from '../../Components/Cards/PreFilterCard.jsx';
+import RecipeCard from '../../Components/Cards/RecipeCard.jsx';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -32,18 +32,18 @@ const Dashboard = () => {
       {activePlaylist?.map((el, i) => (
         <Vitrine title={el.playList.title} key={i}>
           {el.playList.recipes.map((el, i) => (
-            <SingleRecipe content={el} key={el.id} showRecipe={showRecipe} />
+            <RecipeCard content={el} key={el.id} showRecipe={showRecipe} />
           ))}
         </Vitrine>
       ))}
       <Vitrine title="Kitchen type">
         {kitchenTypes?.map((el, i) => (
-          <SingleFilter content={el} key={el.id} type={'cuisine'} />
+          <PreFilterCard content={el} key={el.id} type={'cuisine'} />
         ))}
       </Vitrine>
       <Vitrine title="Dietary recipes">
         {dietRecipes?.map((el, i) => (
-          <SingleFilter content={el} key={el.id} type={'diets'} />
+          <PreFilterCard content={el} key={el.id} type={'diets'} />
         ))}
       </Vitrine>
     </div>

@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import styles from './FilterContainer.module.css';
-import InputFilter from '../InputFilter/InputFilter';
+import styles from './CatalogFilterContainer.module.css';
+import InputFilter from '../Inputs/InputFilter';
 
-const FilterContainer = ({ content, onCheck, onUncheck, checked, title }) => {
+const CatalogFilterContainer = ({
+  content,
+  onCheck,
+  onUncheck,
+  checked,
+  title,
+}) => {
   const [showDropdown, setShowDropdown] = useState(true);
 
   function toggleDropdown() {
@@ -44,4 +50,4 @@ const FilterContainer = ({ content, onCheck, onUncheck, checked, title }) => {
   );
 };
 
-export default FilterContainer;
+export default CatalogFilterContainer;

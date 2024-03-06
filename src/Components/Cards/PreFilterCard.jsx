@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { navigateFromMainToCatalog } from '../../../Helpers/navigate';
-import styles from './SingleFilter.module.css';
+import { navigateFromMainToCatalog } from '../../Helpers/navigate';
+import styles from './PreFilterCard.module.css';
 
-const SingleFilter = ({ content, type }) => {
+const PreFilterCard = ({ content, type }) => {
   const navigate = useNavigate();
 
   function toContent() {
@@ -16,4 +16,4 @@ const SingleFilter = ({ content, type }) => {
   );
 };
 
-export default SingleFilter;
+export default PreFilterCard;
