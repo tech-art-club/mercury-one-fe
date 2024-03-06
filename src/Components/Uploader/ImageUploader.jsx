@@ -59,7 +59,7 @@ const ImageUploader = ({ style, index, handleAddImage }) => {
 
   useEffect(() => {
     handleAddImage(index, files[0]?.fileUrl);
-  }, [files]);
+  }, [files, handleAddImage, index]);
 
   return (
     <>
