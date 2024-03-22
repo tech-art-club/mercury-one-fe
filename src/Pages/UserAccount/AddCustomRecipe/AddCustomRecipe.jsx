@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TfiTimer } from 'react-icons/tfi';
 import { useSelector } from 'react-redux';
@@ -139,42 +139,48 @@ const AddCustomRecipe = () => {
     });
   };
 
-  const handleAddCookingStepImage = async (index, imgUrl) => {
-    try {
-      if (imgUrl) {
-        const base64Image = await imageUrlToBase64(imgUrl);
-        const base64WithoutPrefix = base64Image.split(',')[1];
-        setFormData((prevData) => {
-          const updatedCookingSteps = [...prevData.cookingSteps];
-          updatedCookingSteps[index] = {
-            ...updatedCookingSteps[index],
-            stepImage: base64WithoutPrefix,
-          };
-          return {
-            ...prevData,
-            cookingSteps: updatedCookingSteps,
-          };
-        });
+  const handleAddCookingStepImage = useCallback(
+    async (index, imgUrl) => {
+      try {
+        if (imgUrl) {
+          const base64Image = await imageUrlToBase64(imgUrl);
+          const base64WithoutPrefix = base64Image.split(',')[1];
+          setFormData((prevData) => {
+            const updatedCookingSteps = [...prevData.cookingSteps];
+            updatedCookingSteps[index] = {
+              ...updatedCookingSteps[index],
+              stepImage: base64WithoutPrefix,
+            };
+            return {
+              ...prevData,
+              cookingSteps: updatedCookingSteps,
+            };
+          });
+        }
+      } catch (error) {
+        console.error('Ошибка при обработке изображения:', error);
       }
-    } catch (error) {
-      console.error('Ошибка при обработке изображения:', error);
-    }
-  };
+    },
+    [setFormData]
+  );
 
-  const handleAddImage = async (_, imgUrl) => {
-    try {
-      if (imgUrl) {
-        const base64Image = await imageUrlToBase64(imgUrl);
-        const base64WithoutPrefix = base64Image.split(',')[1];
-        setFormData((prevData) => ({
-          ...prevData,
-          image: base64WithoutPrefix,
-        }));
+  const handleAddImage = useCallback(
+    async (_, imgUrl) => {
+      try {
+        if (imgUrl) {
+          const base64Image = await imageUrlToBase64(imgUrl);
+          const base64WithoutPrefix = base64Image.split(',')[1];
+          setFormData((prevData) => ({
+            ...prevData,
+            image: base64WithoutPrefix,
+          }));
+        }
+      } catch (error) {
+        console.error('Ошибка при обработке изображения:', error);
       }
-    } catch (error) {
-      console.error('Ошибка при обработке изображения:', error);
-    }
-  };
+    },
+    [setFormData]
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();

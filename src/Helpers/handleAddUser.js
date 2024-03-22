@@ -7,6 +7,7 @@ export const handleAddUser = (response, dispatch) => {
     isAuth: true,
     name: decoded.name,
     login: decoded.login,
+    sub: decoded.sub,
   };
   dispatch(setAddUserInfo(userInfo));
 };

@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { SlMagnifier } from 'react-icons/sl';
 import { IoIosClose } from 'react-icons/io';
-import { handleAddRecipeID } from '../../../Helpers/handleAddRecipeID';
+import { navigateToRecipe } from '../../../Helpers/navigate';
 import styles from './HeaderSearch.module.css';
 
 const SearchItem = ({ content, titleFieldPath, addTag }) => {
@@ -22,7 +21,6 @@ const HeaderSearch = () => {
   const navigate = useNavigate();
   const dropdown = useRef(null);
   const search = useRef(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchSearch = async (value) => {
@@ -55,8 +53,7 @@ const HeaderSearch = () => {
 
   function handleFetchedContent(el) {
     setInputHistory([...inputHistory, { Title: el.Title, Id: el.Id }]);
-    handleAddRecipeID(dispatch, el.Id);
-    navigate(`/recipe/${el.Id}`);
+    navigateToRecipe(el.Id, navigate);
     setInputValue('');
   }
 
@@ -90,7 +87,7 @@ const HeaderSearch = () => {
                   role="button"
                   className={styles.pastElement}
                   onClick={(e) => {
-                    handleFetchedContent(e, el);
+                    handleFetchedContent(el);
                   }}
                 >
                   {el.Title}

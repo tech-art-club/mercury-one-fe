@@ -1,0 +1,6 @@
+.like {
+  cursor: pointer;
+  font-size: 30px;
+  color: #febc6a;
+  align-self: flex-end;
+}

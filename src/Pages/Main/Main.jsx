@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './Main.module.css';
-import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID.js';
+import { navigateToRecipe } from '../../Helpers/navigate.js';
 
 import {
   selectActivePlaylist,
@@ -15,7 +15,6 @@ import PreFilterCard from '../../Components/Cards/PreFilterCard.jsx';
 import RecipeCard from '../../Components/Cards/RecipeCard.jsx';
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const activePlaylist = useSelector(selectActivePlaylist);
@@ -23,8 +22,7 @@ const Dashboard = () => {
   const kitchenTypes = useSelector(selectKitchenType);
 
   function showRecipe(id) {
-    handleAddRecipeID(dispatch, id);
-    navigate(`/recipe/${id}`);
+    navigateToRecipe(id, navigate);
   }
 
   return (

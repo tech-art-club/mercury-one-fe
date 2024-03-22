@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import RecipeLike from '../../Components/Likes/RecipeLike';
+import { isLike } from '../../Helpers/isLike';
+import { addViewedRecipe } from '../../Store/Slices/authReducer';
+import { selectAuth } from '../../Store/Slices/authReducer';
 import styles from './Recipe.module.css';
 import { useEffect, useState } from 'react';
 import { PieChart, pieChartDefaultProps } from 'react-minimal-pie-chart';
+import { useSelector, useDispatch } from 'react-redux';
 
 const defaultLabelStyle = {
   fontSize: '5px',
@@ -12,6 +17,8 @@ const shiftSize = 1;
 
 const Recipe = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const userId = useSelector(selectAuth);
   const [recipe, setRecipe] = useState({});
 
   useEffect(() => {
@@ -19,13 +26,20 @@ const Recipe = () => {
       const res = await axios.get(
         `https://mercure-recipe-app-dev.azurewebsites.net/Recipes?id=${recipeId}`
       );
+      const recipe = {
+        id: res.data.id,
+        title: res.data.title,
+        smallImageUrl: res.data.smallImageUrl,
+        likes: res.data.likes,
+      };
+      dispatch(addViewedRecipe({ recipe, userId }));
       return setRecipe(res.data);
     };
 
     if (id) {
       fetchRecipe(id);
     }
-  }, [id]);
+  }, [id, dispatch, userId]);
 
   return (
     id && (
@@ -47,6 +61,10 @@ const Recipe = () => {
                 </div>
               </div>
             ))}
+            <div className={styles.likes}>
+              <RecipeLike onClick={isLike} />
+              <span className={styles.likesQuantity}>{recipe.likes}</span>
+            </div>
           </div>
         </div>
         <div className={styles.contentRow}>

@@ -12,7 +12,7 @@ import {
 import { fetchFilter } from '../../Store/Slices/filterReducer';
 import CatalogContent from './CatalogContent';
 import CatalogTags from './CatalogTags';
-import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
+import { navigateToRecipe } from '../../Helpers/navigate';
 import CatalogFilter from './CatalogFilter';
 
 const Catalog = () => {
@@ -69,8 +69,7 @@ const Catalog = () => {
   const filtredRecipes = useSelector(selectFilter);
 
   function showRecipe(id) {
-    handleAddRecipeID(dispatch, id);
-    navigate(`/recipe/${id}`);
+    navigateToRecipe(id, navigate);
   }
 
   function removeTag(content) {

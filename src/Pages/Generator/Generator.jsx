@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
+import { useSelector } from 'react-redux';
 import { selectProducts } from '../../Store/Slices/productsReducer';
 import {
   selectDietaryRecipes,
@@ -18,7 +17,6 @@ const Generator = () => {
   const isUnmountedRef = useRef(false);
   const connector = Connector();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [requestBody, setRequestBody] = useState({
     dietIds: [],
@@ -42,8 +40,6 @@ const Generator = () => {
       requestBody,
       connector.connection.connectionId
     );
-
-    handleAddRecipeID(dispatch, recipeId);
 
     setLoading(false);
 

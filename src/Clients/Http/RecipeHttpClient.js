@@ -13,7 +13,7 @@ async function getRecipesODataAsync(filter) {
         filterParam + `DietRecipes/any(i: i/DietId eq ${element.id})`;
 
       if (index < filter.diets.length - 1) {
-        filterParam = filterParam + ' and ';
+        filterParam = filterParam + ' or ';
       }
     });
   }
@@ -35,7 +35,7 @@ async function getRecipesODataAsync(filter) {
           `DishTypeRecipes /any(i: i/DishTypeId eq ${element.id})`;
 
         if (index < filter.dish.length - 1) {
-          filterParam = filterParam + ' and ';
+          filterParam = filterParam + ' or ';
         }
       });
     }
@@ -57,13 +57,14 @@ async function getRecipesODataAsync(filter) {
           filterParam + `CuisineRecipes/any(i: i/CuisineId eq ${element.id})`;
 
         if (index < filter.cuisine.length - 1) {
-          filterParam = filterParam + ' and ';
+          filterParam = filterParam + ' or ';
         }
       });
     }
   }
 
   let url = '';
+
   if (filterParam && expandParam) {
     url = `${baseUrl}OData/Recipes?$filter=${filterParam}&$expand=${expandParam}`;
   } else {

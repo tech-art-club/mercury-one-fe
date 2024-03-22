@@ -66,6 +66,17 @@
   border-bottom: 1px solid black;
 }
 
+.likes {
+  margin-top: 20px;
+  align-self: flex-end;
+  display: flex;
+}
+
+.likesQuantity {
+  font-size: 20px;
+  margin-left: 5px;
+}
+
 .description {
   width: 50%;
   margin-left: 300px;

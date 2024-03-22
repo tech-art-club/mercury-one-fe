@@ -34,7 +34,7 @@ const App = () => {
             <Route path="random_recipe" element={<RandomRecipe />} />
             <Route path="basket" element={<Basket />} />
             <Route
-              path="account"
+              path="account/*"
               element={
                 <ProtectedRoute>
                   <UserAccount />
