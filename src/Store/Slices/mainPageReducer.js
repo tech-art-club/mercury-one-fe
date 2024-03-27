@@ -9,6 +9,34 @@ const initialState = {
   dishType: [],
 };
 
+export const fetchAllData = createAsyncThunk(
+  'mainPage/fetchAllData',
+  async (_, thunkAPI) => {
+    await thunkAPI.dispatch(
+      fetchActivePlaylist(
+        'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active'
+      )
+    );
+    await thunkAPI.dispatch(
+      fetchDietaryRecipes(
+        'https://mercure-recipe-app-dev.azurewebsites.net/Diets/all'
+      )
+    );
+    await thunkAPI.dispatch(
+      fetchKitchenType(
+        'https://mercure-recipe-app-dev.azurewebsites.net/Cuisines/all'
+      )
+    );
+    await thunkAPI.dispatch(
+      fetchDishType(
+        'https://mercure-recipe-app-dev.azurewebsites.net/DishTypes/all'
+      )
+    );
+
+    return null;
+  }
+);
+
 export const fetchActivePlaylist = createAsyncThunk(
   'mainPage/fetchActivePlaylist',
   async (url) => {
@@ -54,6 +82,7 @@ const mainPageSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchAllData.fulfilled, (state) => {});
     builder.addCase(fetchActivePlaylist.fulfilled, (state, action) => {
       state.activePlaylist = [...action.payload];
     });

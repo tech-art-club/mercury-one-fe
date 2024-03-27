@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { navigateFromMainToCatalog } from '../../Helpers/navigate';
-import styles from './PreFilterCard.module.css';
+import styles from './PreFilterCard.module.scss';
 
 const PreFilterCard = ({ content, type }) => {
   const navigate = useNavigate();
@@ -10,8 +10,8 @@ const PreFilterCard = ({ content, type }) => {
   }
 
   return (
-    <div key={content.id} className={styles.content} onClick={toContent}>
-      {content.title}
+    <div key={content.id} className={styles.card} onClick={toContent}>
+      <div className={styles.card__title}>{content.title}</div>
     </div>
   );
 };

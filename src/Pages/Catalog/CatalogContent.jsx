@@ -1,8 +1,11 @@
 import RecipeCard from '../../Components/Cards/RecipeCard';
+import styles from './CatalogContent.module.scss';
 
 const CatalogContent = ({ content, showRecipe }) => {
   return content?.map((el) => (
-    <RecipeCard key={el.Id} content={el} showRecipe={showRecipe} />
+    <div className={styles.cardContainer} key={el.Id}>
+      <RecipeCard content={el} showRecipe={showRecipe} />
+    </div>
   ));
 };
 

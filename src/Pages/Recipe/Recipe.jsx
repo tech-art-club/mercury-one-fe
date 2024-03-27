@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { PiTimerLight } from 'react-icons/pi';
 import RecipeLike from '../../Components/Likes/RecipeLike';
 import { isLike } from '../../Helpers/isLike';
 import { addViewedRecipe } from '../../Store/Slices/authReducer';
@@ -20,6 +21,8 @@ const Recipe = () => {
   const dispatch = useDispatch();
   const userId = useSelector(selectAuth);
   const [recipe, setRecipe] = useState({});
+
+  console.log(recipe);
 
   useEffect(() => {
     const fetchRecipe = async (recipeId) => {
@@ -66,6 +69,10 @@ const Recipe = () => {
               <span className={styles.likesQuantity}>{recipe.likes}</span>
             </div>
           </div>
+        </div>
+        <div className={styles.cookingTime}>
+          <PiTimerLight className={styles.cookingTimeIcon} />
+          {recipe.cookingTimeMinutes} min
         </div>
         <div className={styles.contentRow}>
           <div className={styles.contentColumn}>
@@ -130,6 +137,9 @@ const Recipe = () => {
               <div key={el.id}>
                 <div className={styles.step}>Step {el.stepNumber}</div>
                 <div className={styles.stepDescription}>{el.description}</div>
+                <div className={styles.stepImage}>
+                  <img src={el.imageUrl} alt="smallImg" />
+                </div>
               </div>
             ))}
         </div>

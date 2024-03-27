@@ -1,0 +1,24 @@
+$black-color: #141414;
+
+.vitrineContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+
+  &__button {
+    margin-top: 32px;
+    align-self: center;
+  }
+
+  &__title {
+    color: $black-color;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 120%;
+  }
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

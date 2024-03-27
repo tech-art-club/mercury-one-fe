@@ -4,7 +4,7 @@ import axios from 'axios';
 import { SlMagnifier } from 'react-icons/sl';
 import { IoIosClose } from 'react-icons/io';
 import { navigateToRecipe } from '../../../Helpers/navigate';
-import styles from './HeaderSearch.module.css';
+import styles from './HeaderSearch.module.scss';
 
 const SearchItem = ({ content, titleFieldPath, addTag }) => {
   return (
@@ -71,40 +71,33 @@ const HeaderSearch = () => {
 
   const getKey = (obj) => Object.values(obj).join('|');
 
-  function showSearechHistory() {
+  function showSearchHistory() {
     if (inputHistory.length > 0) {
       return Array.from(
         new Map(inputHistory.map((obj) => [getKey(obj), obj])).values()
       )
         .filter((el) => el !== '')
-        .toReversed()
-        .map((el, i) => {
-          if (i < 3) {
-            return (
-              <div className={styles.pastSearch} key={i}>
-                <SlMagnifier style={{ marginRight: '24px' }} />
-                <div
-                  role="button"
-                  className={styles.pastElement}
-                  onClick={(e) => {
-                    handleFetchedContent(el);
-                  }}
-                >
-                  {el.Title}
-                </div>
-                <IoIosClose
-                  style={{ cursor: 'pointer' }}
-                  onClick={(e) => {
-                    setInputHistory(inputHistory.filter((obj) => obj !== el));
-                  }}
-                />
-              </div>
-            );
-          }
-          return '';
-        });
+        .slice(0, 3)
+        .map((el, i) => (
+          <div className={styles.pastSearch} key={i}>
+            <SlMagnifier style={{ marginRight: '24px' }} />
+            <div
+              role="button"
+              className={styles.pastElement}
+              onClick={() => handleFetchedContent(el)}
+            >
+              {el.Title}
+            </div>
+            <IoIosClose
+              style={{ cursor: 'pointer' }}
+              onClick={() =>
+                setInputHistory(inputHistory.filter((obj) => obj !== el))
+              }
+            />
+          </div>
+        ));
     }
-    return;
+    return null;
   }
 
   function toGenerator() {
@@ -118,10 +111,11 @@ const HeaderSearch = () => {
   };
 
   return (
-    <div className={styles.headerSearchWrapper}>
+    <div className={styles.search}>
       <form onSubmit={handleInputSubmit}>
-        <div className={styles.inputWithIcon}>
+        <div className={styles.search__input_container}>
           <input
+            className={styles.search__input}
             type="text"
             placeholder="Search"
             value={inputValue}
@@ -129,7 +123,7 @@ const HeaderSearch = () => {
             onClick={showDropdown}
             ref={search}
           />
-          <SlMagnifier className={styles.icon} />
+          <SlMagnifier className={styles.search__icon} />
           <div className={styles.dropdown} ref={dropdown}>
             <div className={styles.dropdownUi}>
               {inputValue.length === 0 && (
@@ -153,7 +147,7 @@ const HeaderSearch = () => {
             )}
             {inputValue.length === 0 && (
               <div className={styles.pastSearchContainer}>
-                {showSearechHistory()}
+                {showSearchHistory()}
               </div>
             )}
             <button

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TfiTimer } from 'react-icons/tfi';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,43 @@ import { imageUrlToBase64 } from '../../../Helpers/imageUrlToBase64';
 import styles from './AddCustomRecipe.module.css';
 import AddCookingStep from './AddCookingStep';
 
+const TimeInputWrapper = ({ handleTimeChange }) => {
+  const [totalHours, setTotalHours] = useState(0);
+  const [totalMinutes, setTotalMinutes] = useState(0);
+
+  function handleHoursChange(_, property, hours) {
+    setTotalHours(hours * 60);
+  }
+
+  function handleMinutesChange(_, property, minutes) {
+    setTotalMinutes(minutes);
+  }
+
+  useEffect(() => {
+    handleTimeChange(totalHours + totalMinutes);
+  }, [totalHours, totalMinutes, handleTimeChange]);
+
+  return (
+    <div className={styles.inputTimeContainer}>
+      <TfiTimer className={styles.timeIcon} />
+      <NumInput
+        onChange={handleHoursChange}
+        name={'hours'}
+        property={'cookingTimeMinutes'}
+        placeholder={'h'}
+      />
+      <p style={{ marginRight: '10px', marginLeft: '-10px' }}>hours</p>
+      <NumInput
+        onChange={handleMinutesChange}
+        name={'minutes'}
+        property={'cookingTimeMinutes'}
+        placeholder={'m'}
+      />
+      <p style={{ marginLeft: '-10px' }}>minutes</p>
+    </div>
+  );
+};
+
 const AddCustomRecipe = () => {
   const navigate = useNavigate();
   const allPropducts = useSelector(selectProducts);
@@ -26,10 +63,12 @@ const AddCustomRecipe = () => {
   const allDiets = useSelector(selectDietaryRecipes);
   const allKitchenTypes = useSelector(selectKitchenType);
   const allDishTypes = useSelector(selectDishType);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     calorieContent: 0,
+    cookingTimeMinutes: 0,
     proteins: 0,
     fats: 0,
     carbohydrates: 0,
@@ -37,7 +76,7 @@ const AddCustomRecipe = () => {
       {
         stepNumber: 0,
         description: '',
-        stepImage: '',
+        image: '',
       },
     ],
     dietIds: [],
@@ -69,6 +108,16 @@ const AddCustomRecipe = () => {
       [property]: value,
     }));
   };
+
+  const handleTimeChange = useCallback(
+    (time) => {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        cookingTimeMinutes: time,
+      }));
+    },
+    [setFormData]
+  );
 
   const handleCookingStepChange = (index, property, value) => {
     setFormData((prevFormData) => {
@@ -149,7 +198,7 @@ const AddCustomRecipe = () => {
             const updatedCookingSteps = [...prevData.cookingSteps];
             updatedCookingSteps[index] = {
               ...updatedCookingSteps[index],
-              stepImage: base64WithoutPrefix,
+              image: base64WithoutPrefix,
             };
             return {
               ...prevData,
@@ -193,8 +242,6 @@ const AddCustomRecipe = () => {
     }
   };
 
-  console.log(formData);
-
   return (
     <div className={styles.mainContainer}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -237,23 +284,7 @@ const AddCustomRecipe = () => {
         />
         <div className={styles.timeContainer}>
           <h2 style={{ marginBottom: '20px' }}>Cooking time</h2>
-          <div className={styles.inputTimeContainer}>
-            <TfiTimer className={styles.timeIcon} />
-            <NumInput
-              onChange={handleCategoryChange}
-              name={'hours'}
-              property={'hours'}
-              placeholder={'h'}
-            />
-            <p style={{ marginRight: '10px', marginLeft: '-10px' }}>hours</p>
-            <NumInput
-              onChange={handleCategoryChange}
-              name={'minutes'}
-              property={'minutes'}
-              placeholder={'m'}
-            />
-            <p style={{ marginLeft: '-10px' }}>minutes</p>
-          </div>
+          <TimeInputWrapper handleTimeChange={handleTimeChange} />
         </div>
         <div>
           <h2>Add category</h2>

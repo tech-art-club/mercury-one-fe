@@ -5,5 +5,9 @@
 }
 
 .active {
-  color: lightblue;
+  color: #faa73f;
 }
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */

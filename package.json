@@ -24,6 +24,7 @@
     "react-select": "^5.8.0",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.4",
+    "sass": "^1.72.0",
     "uploader": "^3.48.3",
     "web-vitals": "^2.1.4"
   },

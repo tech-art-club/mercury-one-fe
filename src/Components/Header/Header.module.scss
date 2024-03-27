@@ -1,0 +1,54 @@
+$black-color: #141414;
+$main-color: #faa73f;
+
+.header {
+  font-family: 'Poppins';
+  display: flex;
+  height: 101px;
+  padding: 26.5px 64px;
+  align-items: center;
+  background-color: white;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 24px;
+    color: white;
+
+    &_img {
+      margin-right: 12px;
+    }
+
+    &_text {
+      margin-right: 64px;
+      margin-top: 10px;
+    }
+  }
+}
+
+.nav {
+  &__list {
+    &_link {
+      margin-right: 32px;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 120%;
+      color: $black-color;
+      text-decoration: none;
+    }
+
+    &_basket {
+      font-size: 20px;
+      color: black;
+      margin-left: 32px;
+    }
+
+    &_account {
+      font-size: 20px;
+      color: black;
+      margin-left: 32px;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { Children, useState } from 'react';
-import styles from './Vitrine.module.css';
+import PrimaryButton from '../../Components/Buttons/PrimaryButton';
+import styles from './Vitrine.module.scss';
 
 const Vitrine = ({ title, children }) => {
   const [activeQuantity, setActiveQuantity] = useState(5);
@@ -10,21 +11,19 @@ const Vitrine = ({ title, children }) => {
 
   return (
     <div className={styles.vitrineContainer}>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.content}>
+      <div className={styles.vitrineContainer__title}>{title}</div>
+      <div className={styles.vitrineContainer__content}>
         {Children.map(children, (child, i) => i < activeQuantity && child)}
       </div>
-      <button
-        className={styles.showMoreBtn}
-        onClick={showMore}
-        style={
-          activeQuantity >= children?.length
-            ? { display: 'none' }
-            : { display: 'block' }
-        }
-      >
-        Show more
-      </button>
+      <div className={styles.vitrineContainer__button}>
+        <PrimaryButton
+          onClick={showMore}
+          fontSize={'24px'}
+          display={activeQuantity >= children?.length ? 'none' : 'block'}
+        >
+          Show more
+        </PrimaryButton>
+      </div>
     </div>
   );
 };
