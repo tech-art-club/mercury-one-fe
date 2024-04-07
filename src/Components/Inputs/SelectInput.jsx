@@ -7,7 +7,8 @@ const SelectInput = ({
   index,
   property,
   placeholder,
-  styles,
+
+  classNamePrefix,
   isMulty = false,
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -33,15 +34,14 @@ const SelectInput = ({
   }));
 
   return (
-    <div style={styles}>
-      <Select
-        value={getValue()}
-        onChange={onChange}
-        options={options}
-        placeholder={placeholder}
-        isMulti={isMulty}
-      />
-    </div>
+    <Select
+      value={getValue()}
+      onChange={onChange}
+      options={options}
+      placeholder={placeholder}
+      classNamePrefix={classNamePrefix}
+      isMulti={isMulty}
+    />
   );
 };
 

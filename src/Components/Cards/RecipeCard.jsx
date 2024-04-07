@@ -4,7 +4,7 @@ import styles from './RecipeCard.module.scss';
 
 const RecipeCard = ({ content, showRecipe }) => {
   const convertedContent = convertKeysToLowerCase(content);
-  /* console.log(convertedContent); */
+  /* console.log(convertedContent.id); */
 
   return (
     <div
@@ -21,7 +21,7 @@ const RecipeCard = ({ content, showRecipe }) => {
           {convertedContent.title}
         </div>
         <div className={styles.card__likes}>
-          <RecipeLike />
+          <RecipeLike id={convertedContent.id} />
           <span>{convertedContent.likes}</span>
         </div>
       </div>

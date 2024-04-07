@@ -8,7 +8,8 @@ import {
   selectDishType,
 } from '../../Store/Slices/mainPageReducer';
 import SelectInput from '../../Components/Inputs/SelectInput';
-import styles from './Generator.module.css';
+import PrimaryButton from '../../Components/Buttons/PrimaryButton';
+import styles from './Generator.module.scss';
 import Connector from '../../Clients/SignalR/RecipeGenerationHub';
 import RecipeAsStream from '../../Components/AsStream/RecipeAsStream';
 import { generateRecipeWithStreamAsync } from '../../Clients/Http/RecipeHttpClient';
@@ -68,71 +69,95 @@ const Generator = () => {
   return (
     <div className={styles.mainContainer}>
       {!loading && (
-        <div className={styles.inputsContainer}>
-          <SelectInput
-            content={allDiets}
-            isMulty={true}
-            property={'dietIds'}
-            handleChange={handleChange}
-            placeholder={'enter diet tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <SelectInput
-            content={allKitchenTypes}
-            isMulty={true}
-            property={'cuisineIds'}
-            handleChange={handleChange}
-            placeholder={'enter cuisine tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <SelectInput
-            content={allDishTypes}
-            isMulty={true}
-            property={'dishTypeIds'}
-            handleChange={handleChange}
-            placeholder={'enter dishtype tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <SelectInput
-            content={allProducts}
-            isMulty={true}
-            property={'availableProductIds'}
-            handleChange={handleChange}
-            placeholder={'enter available product tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <SelectInput
-            content={allProducts}
-            isMulty={true}
-            property={'desiredProductIds'}
-            handleChange={handleChange}
-            placeholder={'enter desired product tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <SelectInput
-            content={allProducts}
-            isMulty={true}
-            property={'unacceptableProductIds'}
-            handleChange={handleChange}
-            placeholder={'enter unacceptable product tags'}
-            styles={{ width: '330px', marginTop: '20px' }}
-          />
-          <input
-            type="text"
-            placeholder="additional requirements"
-            className={styles.additionalInput}
-            value={requestBody.additionalRequirements}
-            onChange={(e) =>
-              handleChange(undefined, 'additionalRequirements', e.target.value)
-            }
-          />
-          <button
-            className={styles.generateRecipeBtn}
-            onClick={(e) => sendPostRequest()}
-          >
-            Generate recipe
-          </button>
-        </div>
+        <>
+          <div className={styles.inputsContainer}>
+            <div className={styles.selcetContainer}>
+              <h2>Diets</h2>
+              <SelectInput
+                content={allDiets}
+                isMulty={true}
+                property={'dietIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+            <div className={styles.selcetContainer}>
+              <h2>Cuisines</h2>
+              <SelectInput
+                content={allKitchenTypes}
+                isMulty={true}
+                property={'cuisineIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+            <div className={styles.selcetContainer}>
+              <h2>Dish types</h2>
+              <SelectInput
+                content={allDishTypes}
+                isMulty={true}
+                property={'dishTypeIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+            <div className={styles.selcetContainer}>
+              <h2>Available products</h2>
+              <SelectInput
+                content={allProducts}
+                isMulty={true}
+                property={'availableProductIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+            <div className={styles.selcetContainer}>
+              <h2>Desired products</h2>
+              <SelectInput
+                content={allProducts}
+                isMulty={true}
+                property={'desiredProductIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+            <div className={styles.selcetContainer}>
+              <h2>Unacceptable products</h2>
+              <SelectInput
+                content={allProducts}
+                isMulty={true}
+                property={'unacceptableProductIds'}
+                handleChange={handleChange}
+                placeholder={'Enter your tag'}
+                classNamePrefix={'generatorInput'}
+              />
+            </div>
+          </div>
+          <div className={styles.additionalInputContainer}>
+            <h2>Additional requirements</h2>
+            <textarea
+              type="text"
+              placeholder="Enter your requirement"
+              className={styles.additionalInput}
+              value={requestBody.additionalRequirements}
+              onChange={(e) =>
+                handleChange(
+                  undefined,
+                  'additionalRequirements',
+                  e.target.value
+                )
+              }
+            />
+            <PrimaryButton fontSize={'24px'} onClick={sendPostRequest}>
+              Generate recipe
+            </PrimaryButton>
+          </div>
+        </>
       )}
       {loading && (
         <RecipeAsStream methods={connector.methods} events={connector.events} />

@@ -35,8 +35,6 @@ const requestWithValidRefreshToken = async (request, headers, refreshToken) => {
     refresh: refreshToken,
   });
 
-  console.log(refreshResponse);
-
   if (refreshResponse.data.access && refreshResponse.data.refresh) {
     setLocalStorage('access', refreshResponse.data.access);
     setLocalStorage('refresh', refreshResponse.data.refresh);
@@ -47,7 +45,6 @@ const requestWithValidRefreshToken = async (request, headers, refreshToken) => {
 
     return response;
   } else {
-    debugger;
     console.error('Access or refresh token is undefined in the response.');
     return null;
   }
@@ -77,7 +74,12 @@ export const requestWithTokenValidation = async (
 
     return await requestWithoutTokens(request, headers);
   } catch (error) {
-    if (isChecked === false && error.response.status === 401) {
+    /* debugger; */
+    if (
+      isChecked === false &&
+      error.response &&
+      error.response.status === 401
+    ) {
       return await requestWithTokenValidation(request, true);
     }
   }
