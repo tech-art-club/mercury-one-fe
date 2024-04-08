@@ -3,17 +3,17 @@ import { requestWithTokenValidation } from '../Helpers/requestWithTokenValidatio
 
 export const isLike = async (recipeId) => {
   const url = `https://mercury-uc-app-dev.azurewebsites.net/Recipes/like?recipeId=${recipeId}`;
-  /* const url = 'https://mercury-uc-app-dev.azurewebsites.net/Recipes/all'; */
+  /* const url =
+    'https://mercure-recipe-app-dev.azurewebsites.net/TestToken/public'; */
 
-  try {
-    const res = await requestWithTokenValidation((headers) => {
-      return axios.patch(url, { headers });
+  const res = await requestWithTokenValidation((headers) => {
+    return axios.patch(url, {
+      headers: {
+        MyCustomHeader1: '1',
+        MyCustomHeader2: '2',
+      },
     });
-    console.log(res);
-
-    return res;
-  } catch (error) {
-    console.error('Error occurred while sending like request:', error);
-    throw error;
-  }
+  });
+  console.log(res);
+  return res;
 };

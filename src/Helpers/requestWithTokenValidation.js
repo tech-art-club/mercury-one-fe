@@ -17,6 +17,8 @@ const tokenIsValid = (token) => {
 const requestWithValidAccessToken = async (request, headers, accessToken) => {
   headers = { Authorization: `Bearer ${accessToken}` };
   const response = await request({ headers });
+  debugger;
+
   return response;
 };
 
@@ -54,6 +56,7 @@ export const requestWithTokenValidation = async (
   request,
   isChecked = false
 ) => {
+  debugger;
   const accessToken = getLocalStorage('access');
   const refreshToken = getLocalStorage('refresh');
 
@@ -74,12 +77,7 @@ export const requestWithTokenValidation = async (
 
     return await requestWithoutTokens(request, headers);
   } catch (error) {
-    /* debugger; */
-    if (
-      isChecked === false &&
-      error.response &&
-      error.response.status === 401
-    ) {
+    if (isChecked === false && error.response.status === 401) {
       return await requestWithTokenValidation(request, true);
     }
   }

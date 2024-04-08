@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { PiTimerLight } from 'react-icons/pi';
+import Share from '../../Components/Share/Share';
 import RecipeLike from '../../Components/Likes/RecipeLike';
-import { isLike } from '../../Helpers/isLike';
 import { addViewedRecipe } from '../../Store/Slices/authReducer';
 import { selectAuth } from '../../Store/Slices/authReducer';
 import styles from './Recipe.module.css';
@@ -18,11 +18,12 @@ const shiftSize = 1;
 
 const Recipe = () => {
   const { id } = useParams();
+  const fullUrl = window.location.href;
   const dispatch = useDispatch();
   const userId = useSelector(selectAuth);
   const [recipe, setRecipe] = useState({});
 
-  console.log(recipe);
+  console.log(fullUrl);
 
   useEffect(() => {
     const fetchRecipe = async (recipeId) => {
@@ -65,7 +66,8 @@ const Recipe = () => {
               </div>
             ))}
             <div className={styles.likes}>
-              <RecipeLike onClick={isLike} />
+              <Share fullUrl={fullUrl} />
+              <RecipeLike id={recipe.id} />
               <span className={styles.likesQuantity}>{recipe.likes}</span>
             </div>
           </div>
