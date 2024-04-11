@@ -4,7 +4,7 @@ import { UrlBuilder } from '@bytescale/sdk';
 import styles from './ImageUploader.module.css';
 
 const options = {
-  apiKey: 'public_FW25bwmAyiUWaTrLB9BxDXCypLA5', // This is your API key.
+  apiKey: 'public_12a1yuD5VZLZkTyfsVHV9CEfc7m1', // This is your API key.
   maxFileCount: 1,
   showFinishButton: true, // Note: You must use 'onUpdate' if you set 'showFinishButton: false' (default).
   mimeTypes: ['image/*'],

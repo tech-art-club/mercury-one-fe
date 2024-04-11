@@ -9,6 +9,7 @@ import {
   fetchDietaryRecipes,
   fetchKitchenType,
   fetchDishType,
+  fetchAllData,
 } from '../Store/Slices/mainPageReducer.js';
 import { fetchProducts } from '../Store/Slices/productsReducer.js';
 import { fetchMeasurements } from '../Store/Slices/measurementsReducer.js';
@@ -28,7 +29,7 @@ const MainLayout = () => {
   }, [dispatch, token]);
 
   useEffect(() => {
-    dispatch(
+    /* dispatch(
       fetchActivePlaylist(
         'https://mercure-recipe-app-dev.azurewebsites.net/PlayLists/active'
       )
@@ -47,7 +48,8 @@ const MainLayout = () => {
       fetchDishType(
         'https://mercure-recipe-app-dev.azurewebsites.net/DishTypes/all'
       )
-    );
+    ); */
+    dispatch(fetchAllData());
     dispatch(
       fetchProducts(
         'https://mercure-recipe-app-dev.azurewebsites.net/Products/all'

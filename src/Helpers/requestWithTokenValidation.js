@@ -16,12 +16,13 @@ const tokenIsValid = (token) => {
 
 const requestWithValidAccessToken = async (request, headers, accessToken) => {
   headers = { Authorization: `Bearer ${accessToken}` };
-  const response = await request({ headers });
+  const response = await request(headers);
+
   return response;
 };
 
 const requestWithoutTokens = async (request, headers) => {
-  const response = await request({ headers });
+  const response = await request(headers);
   localStorage.removeItem('access');
   localStorage.removeItem('refresh');
   return response;
@@ -35,13 +36,19 @@ const requestWithValidRefreshToken = async (request, headers, refreshToken) => {
     refresh: refreshToken,
   });
 
-  setLocalStorage('access', refreshResponse.data.access);
-  setLocalStorage('refresh', refreshResponse.data.refresh);
+  if (refreshResponse.data.access && refreshResponse.data.refresh) {
+    setLocalStorage('access', refreshResponse.data.access);
+    setLocalStorage('refresh', refreshResponse.data.refresh);
 
-  headers = { Authorization: `Bearer ${refreshResponse.data.access}` };
+    headers = { Authorization: `Bearer ${refreshResponse.data.access}` };
 
-  const response = await request({ headers });
-  return response;
+    const response = await request(headers);
+
+    return response;
+  } else {
+    console.error('Access or refresh token is undefined in the response.');
+    return null;
+  }
 };
 
 export const requestWithTokenValidation = async (

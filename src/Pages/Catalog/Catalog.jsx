@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Catalog.module.css';
+import styles from './Catalog.module.scss';
 import { selectFilter } from '../../Store/Slices/filterReducer';
 import {
   selectDishType,
@@ -12,7 +12,7 @@ import {
 import { fetchFilter } from '../../Store/Slices/filterReducer';
 import CatalogContent from './CatalogContent';
 import CatalogTags from './CatalogTags';
-import { handleAddRecipeID } from '../../Helpers/handleAddRecipeID';
+import { navigateToRecipe } from '../../Helpers/navigate';
 import CatalogFilter from './CatalogFilter';
 
 const Catalog = () => {
@@ -69,8 +69,7 @@ const Catalog = () => {
   const filtredRecipes = useSelector(selectFilter);
 
   function showRecipe(id) {
-    handleAddRecipeID(dispatch, id);
-    navigate(`/recipe/${id}`);
+    navigateToRecipe(id, navigate);
   }
 
   function removeTag(content) {
@@ -113,22 +112,24 @@ const Catalog = () => {
   }
 
   return (
-    <div className={styles.mainContainer}>
-      <aside className={styles.filerContainer}>
-        <CatalogFilter
-          dish={allDishTypes}
-          cuisine={allCuisineTypes}
-          diet={allDietTypes}
-          filter={selectedFilter.titles}
-          addToQuery={addToQuery}
-          removeFromQuery={removeFromQuery}
-        />
-      </aside>
-      <div className={styles.recipesContainer}>
-        <div className={styles.activeTags}>
-          <CatalogTags content={selectedFilter.titles} removeTag={removeTag} />
+    <div className={styles.catalog}>
+      <div className={styles.catalog__tags}>
+        <CatalogTags content={selectedFilter.titles} removeTag={removeTag} />
+      </div>
+      <div className={styles.catalog__filterContainer}>
+        <aside className={styles.catalog__filterContainer_aside}>
+          <CatalogFilter
+            dish={allDishTypes}
+            cuisine={allCuisineTypes}
+            diet={allDietTypes}
+            filter={selectedFilter.titles}
+            addToQuery={addToQuery}
+            removeFromQuery={removeFromQuery}
+          />
+        </aside>
+        <div className={styles.catalog__filterContainer_recipes}>
+          <CatalogContent content={filtredRecipes} showRecipe={showRecipe} />
         </div>
-        <CatalogContent content={filtredRecipes} showRecipe={showRecipe} />
       </div>
     </div>
   );

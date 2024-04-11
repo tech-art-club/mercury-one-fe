@@ -38,6 +38,19 @@
   margin-right: 100px;
 }
 
+.cookingTime {
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.cookingTimeIcon {
+  margin-right: 5px;
+  color: #febc6a;
+  font-size: 30px;
+}
+
 .ingredients {
   width: 50%;
   display: flex;
@@ -66,6 +79,26 @@
   border-bottom: 1px solid black;
 }
 
+.likes {
+  margin-top: 20px;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.likesQuantity {
+  text-align: end;
+  min-width: 15px;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.likesIcon {
+  display: flex;
+  margin-left: 5px;
+}
+
 .description {
   width: 50%;
   margin-left: 300px;
@@ -89,4 +122,16 @@
   margin-top: 15px;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.stepImage {
+  margin-top: 15px;
+  width: 250px;
+  height: 250px;
+}
+
+.stepImage img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }

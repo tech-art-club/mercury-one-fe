@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './InputFilter.module.scss';
 
 const InputFilter = React.memo(({ onCheck, onUncheck, content, isChecked }) => {
   function handleCheckbox(e) {
@@ -10,15 +11,18 @@ const InputFilter = React.memo(({ onCheck, onUncheck, content, isChecked }) => {
   }
 
   return (
-    <div>
+    <div className={styles.input}>
       <input
+        className={styles.input__checkbox}
         type="checkbox"
         id={content.id}
         name={content.title}
         checked={isChecked}
         onChange={handleCheckbox}
       />
-      <label htmlFor={content.id}>{content.title}</label>
+      <label className={styles.input__label} htmlFor={content.id}>
+        {content.title}
+      </label>
     </div>
   );
 });

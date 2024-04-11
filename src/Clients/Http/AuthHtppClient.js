@@ -11,7 +11,11 @@ async function signUp(userData, dispatch) {
       userData
     );
 
-    if (response.status === 200) {
+    if (
+      response.status === 200 &&
+      response.data.access &&
+      response.data.refresh
+    ) {
       console.log('Пользователь успешно зарегистрирован', '----', response);
       setLocalStorage('access', response.data.access);
       setLocalStorage('refresh', response.data.refresh);
@@ -34,7 +38,11 @@ async function signIn(userData, dispatch) {
       }
     );
 
-    if (response.status === 200) {
+    if (
+      response.status === 200 &&
+      response.data.access &&
+      response.data.refresh
+    ) {
       console.log('Пользователь успешно вошел в систему', '----', response);
       setLocalStorage('access', response.data.access);
       setLocalStorage('refresh', response.data.refresh);

@@ -1,0 +1,129 @@
+$grey-color: #565454;
+
+.search {
+  font-family: 'Poppins';
+  width: 513px;
+  height: 48px;
+  margin-right: 76px;
+
+  &__input_container {
+    position: relative;
+  }
+
+  &__input {
+    font-family: 'Poppins';
+    outline: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    width: 100%;
+    height: 100%;
+    padding: 12px 8px;
+    border: 1px solid black;
+    border-radius: 8px;
+    color: $grey-color;
+    background-color: white;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+  }
+}
+
+.dropdown {
+  user-select: none;
+  display: none;
+  padding: 23px 32px;
+  width: 440px;
+  min-height: 100px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 9px;
+  position: absolute;
+}
+
+.dropdownBtn {
+  cursor: pointer;
+  width: 187px;
+  height: 50px;
+  margin-top: 24px;
+  background-color: white;
+  border-radius: 14px;
+  border: 1px solid #000;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.dropdownUi {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdownUi button {
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  color: #348be8;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.searchHistory {
+  align-self: center;
+  color: #585656;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.showDropdown {
+  display: block;
+}
+
+.pastSearchContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.fetchedSearchContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.pastSearch {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #585656;
+}
+
+.pastSearch:hover {
+  border-radius: 9px;
+  background-color: rgba(212, 82, 82, 0.3);
+}
+
+.pastElement {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  color: black;
+}
+
+.searchItem {
+  cursor: pointer;
+  font-size: 20px;
+  width: 100%;
+  padding: 0 5px;
+}
+
+.searchItem:hover {
+  background-color: lightgray;
+}

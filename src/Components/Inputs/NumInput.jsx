@@ -7,7 +7,7 @@ const NumInput = ({ name, placeholder = false, onChange, property, index }) => {
       type="number"
       name={name}
       placeholder={placeholder}
-      onChange={(e) => onChange(index, property, e.target.value)}
+      onChange={(e) => onChange(index, property, parseInt(e.target.value, 10))}
     />
   );
 };

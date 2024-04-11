@@ -1,0 +1,39 @@
+$black-color: #141414;
+
+.filter {
+  margin-bottom: 15px;
+  user-select: none;
+
+  &__titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_title {
+      color: $black-color;
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 120%;
+    }
+
+    &_arrow {
+      cursor: pointer;
+      font-size: 25px;
+      transition: 0.5s;
+
+      &:hover {
+        color: rgb(98, 213, 98);
+      }
+    }
+  }
+
+  &__checkboxesContainer {
+    padding: 10px 0;
+    max-height: 300px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
