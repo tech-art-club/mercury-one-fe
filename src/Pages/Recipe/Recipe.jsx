@@ -22,8 +22,11 @@ const Recipe = () => {
   const dispatch = useDispatch();
   const userId = useSelector(selectAuth);
   const [recipe, setRecipe] = useState({});
+  const [likes, setLikes] = useState(recipe.likes);
 
-  console.log(fullUrl);
+  const updateLikes = (newLikes) => {
+    setLikes((prevLikes) => prevLikes + newLikes);
+  };
 
   useEffect(() => {
     const fetchRecipe = async (recipeId) => {
@@ -45,6 +48,10 @@ const Recipe = () => {
     }
   }, [id, dispatch, userId]);
 
+  useEffect(() => {
+    setLikes(recipe.likes || 0);
+  }, [recipe]);
+
   return (
     id && (
       <div className={styles.recipeContainer}>
@@ -56,8 +63,8 @@ const Recipe = () => {
           <div className={styles.ingredients}>
             <p style={{ alignSelf: 'flex-start' }}>Ingredients</p>
             <div className={styles.servings}>servings: 1 + -</div>
-            {recipe.products?.map((el) => (
-              <div className={styles.product} key={el.id}>
+            {recipe.products?.map((el, i) => (
+              <div className={styles.product} key={i}>
                 <div style={{ width: '50%' }}>{el.name}</div>
                 <div style={{ width: '20%' }}>{el.quantity}</div>
                 <div style={{ width: '30%', textAlign: 'end' }}>
@@ -67,8 +74,10 @@ const Recipe = () => {
             ))}
             <div className={styles.likes}>
               <Share fullUrl={fullUrl} />
-              <RecipeLike id={recipe.id} />
-              <span className={styles.likesQuantity}>{recipe.likes}</span>
+              <div className={styles.likesIcon}>
+                <RecipeLike id={recipe.id} updateLikes={updateLikes} />
+              </div>
+              <span className={styles.likesQuantity}>{likes}</span>
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import convertKeysToLowerCase from '../../Helpers/convertKeysToLowerCase';
+import { LuRocket } from 'react-icons/lu';
 import RecipeLike from '../Likes/RecipeLike';
 import styles from './RecipeCard.module.scss';
 
 const RecipeCard = ({ content, showRecipe }) => {
   const convertedContent = convertKeysToLowerCase(content);
-  /* console.log(convertedContent.id); */
+  /* console.log(convertedContent); */
 
   return (
     <div
@@ -21,8 +22,11 @@ const RecipeCard = ({ content, showRecipe }) => {
           {convertedContent.title}
         </div>
         <div className={styles.card__likes}>
-          <RecipeLike id={convertedContent.id} />
-          <span>{convertedContent.likes}</span>
+          <LuRocket className={styles.card__likes_icon} />
+          {/* <RecipeLike id={convertedContent.id} /> */}
+          <span className={styles.card__likes_count}>
+            {convertedContent.likes}
+          </span>
         </div>
       </div>
     </div>

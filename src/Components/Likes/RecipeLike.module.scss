@@ -1,7 +1,11 @@
-$main-color: #faa73f;
-
-.like {
+.liked {
   cursor: pointer;
-  font-size: 30px;
-  color: $main-color;
+  font-size: 22px;
+  color: red;
+}
+
+.unliked {
+  cursor: pointer;
+  font-size: 22px;
+  color: lightgray;
 }

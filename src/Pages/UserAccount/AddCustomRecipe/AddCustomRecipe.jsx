@@ -309,7 +309,11 @@ const AddCustomRecipe = () => {
         <FormAddButton onClick={handleAddCookingStep}>
           Add Cooking Step
         </FormAddButton>
-        <button type="submit" className={styles.btnSubmit}>
+        <button
+          type="submit"
+          className={styles.btnSubmit}
+          onClick={handleSubmit}
+        >
           Submit
         </button>
       </form>

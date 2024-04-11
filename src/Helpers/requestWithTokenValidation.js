@@ -16,14 +16,13 @@ const tokenIsValid = (token) => {
 
 const requestWithValidAccessToken = async (request, headers, accessToken) => {
   headers = { Authorization: `Bearer ${accessToken}` };
-  const response = await request({ headers });
-  debugger;
+  const response = await request(headers);
 
   return response;
 };
 
 const requestWithoutTokens = async (request, headers) => {
-  const response = await request({ headers });
+  const response = await request(headers);
   localStorage.removeItem('access');
   localStorage.removeItem('refresh');
   return response;
@@ -43,7 +42,7 @@ const requestWithValidRefreshToken = async (request, headers, refreshToken) => {
 
     headers = { Authorization: `Bearer ${refreshResponse.data.access}` };
 
-    const response = await request({ headers });
+    const response = await request(headers);
 
     return response;
   } else {
@@ -56,7 +55,6 @@ export const requestWithTokenValidation = async (
   request,
   isChecked = false
 ) => {
-  debugger;
   const accessToken = getLocalStorage('access');
   const refreshToken = getLocalStorage('refresh');
 
