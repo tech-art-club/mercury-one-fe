@@ -36,6 +36,8 @@
   align-self: flex-start;
   margin-top: 10px;
   margin-right: 100px;
+  min-width: 250px;
+  min-height: 250px;
 }
 
 .cookingTime {

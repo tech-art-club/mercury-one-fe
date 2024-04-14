@@ -6,6 +6,7 @@
     "@bytescale/sdk": "^3.31.1",
     "@bytescale/upload-widget-react": "^4.18.0",
     "@microsoft/signalr": "^8.0.0",
+    "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

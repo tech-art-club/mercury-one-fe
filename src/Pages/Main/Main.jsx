@@ -28,6 +28,10 @@ const Dashboard = () => {
     navigateToRecipe(id, navigate);
   }
 
+  function toGenerate() {
+    navigate('/generator');
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.main__imageContainer}>
@@ -37,7 +41,9 @@ const Dashboard = () => {
           Savor!
         </h1>
         <div className={styles.main__imageContainer_button}>
-          <PrimaryButton fontSize={'32px'}>Generate dish</PrimaryButton>
+          <PrimaryButton fontSize={'32px'} onClick={toGenerate}>
+            Generate dish
+          </PrimaryButton>
         </div>
       </div>
       <div className={styles.main__contentContainer}>
