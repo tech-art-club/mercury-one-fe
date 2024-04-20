@@ -148,9 +148,11 @@ const Recipe = () => {
               <div key={el.id}>
                 <div className={styles.step}>Step {el.stepNumber}</div>
                 <div className={styles.stepDescription}>{el.description}</div>
-                <div className={styles.stepImage}>
-                  <img src={el.imageUrl} alt="smallImg" />
-                </div>
+                {el.imageUrl && (
+                  <div className={styles.stepImage}>
+                    <img src={el.imageUrl} alt="smallImg" />
+                  </div>
+                )}
               </div>
             ))}
         </div>

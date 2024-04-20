@@ -1,12 +1,16 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { BsBasket3 } from 'react-icons/bs';
-import { GoPerson } from 'react-icons/go';
 import HeaderSearch from './HeaderSearch/HeaderSearch';
+import PrimaryButton from '../Buttons/PrimaryButton';
+import { selectAuth } from '../../Store/Slices/authReducer';
+import { useSelector } from 'react-redux';
 import styles from './Header.module.scss';
 
 const Header = () => {
+  const isAuth = useSelector(selectAuth).isAuth;
   const navigate = useNavigate();
+  console.log(isAuth);
 
   function toHome() {
     navigate('/');
@@ -41,7 +45,11 @@ const Header = () => {
             <BsBasket3 />
           </NavLink>
           <NavLink to="account" className={styles.nav__list_account}>
-            <GoPerson />
+            {isAuth ? (
+              <img src="../UserPlaceholder.png" alt="UserPhoto" />
+            ) : (
+              <PrimaryButton fontSize={'24px'}>Login</PrimaryButton>
+            )}
           </NavLink>
         </div>
       </div>

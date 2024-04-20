@@ -1,9 +1,10 @@
-import React from 'react';
+import ProgressBar from '../../Components/ProgressBar/ProgressBar';
 
 function Diet() {
   return (
     <div>
       Diet
+      <ProgressBar />
     </div>
   );
 }

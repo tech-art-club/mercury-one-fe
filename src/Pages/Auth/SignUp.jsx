@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../Clients/Http/AuthHtppClient';
 import SignInput from '../../Components/Inputs/SignInput';
-import styles from './Sign.module.css';
+import styles from './Sign.module.scss';
 
 const SignUp = ({ toRegister }) => {
   const dispatch = useDispatch();
@@ -24,12 +24,12 @@ const SignUp = ({ toRegister }) => {
   }
 
   return (
-    <div className={styles.mainContainer}>
-      <h2>Create an account</h2>
+    <div className={styles.sign}>
+      <h2 className={styles.sign__title}>Create an account</h2>
       <SignInput
         value={login}
         placeholder={'Login'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setLogin(obj);
         }}
@@ -38,7 +38,7 @@ const SignUp = ({ toRegister }) => {
         type="password"
         value={password}
         placeholder={'Password'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setPassword(obj);
         }}
@@ -47,7 +47,7 @@ const SignUp = ({ toRegister }) => {
         type="email"
         value={email}
         placeholder={'Email'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setEmail(obj);
         }}
@@ -55,7 +55,7 @@ const SignUp = ({ toRegister }) => {
       <SignInput
         value={userName}
         placeholder={'Name'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setUserName(obj);
         }}
