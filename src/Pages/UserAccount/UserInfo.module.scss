@@ -1,0 +1,51 @@
+$black-color: #141414;
+$grey-color: #565454;
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  padding: 10px;
+  border-radius: 8px;
+
+  &__containerRow {
+    display: flex;
+  }
+
+  &__containerColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__name {
+    margin-left: 8px;
+    margin-top: 8px;
+    color: $black-color;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 120%;
+  }
+
+  &__login {
+    margin-left: 8px;
+    margin-bottom: 8px;
+    color: $grey-color;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 120%;
+  }
+
+  &__btn_logout {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    width: max-content;
+    height: 53px;
+    background-color: $grey-color;
+    color: white;
+    font-size: 17px;
+    margin-top: 10px;
+  }
+}

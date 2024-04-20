@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../../Clients/Http/AuthHtppClient';
+import PrimaryButton from '../../Components/Buttons/PrimaryButton';
 import SignInput from '../../Components/Inputs/SignInput';
-import styles from './Sign.module.css';
+import styles from './Sign.module.scss';
 
 const SignIn = ({ toRegister }) => {
   const dispatch = useDispatch();
@@ -14,12 +15,12 @@ const SignIn = ({ toRegister }) => {
   }
 
   return (
-    <div className={styles.mainContainer}>
-      <h2>Please, sign in</h2>
+    <div className={styles.sign}>
+      <h2 className={styles.sign__title}>Please, sign in</h2>
       <SignInput
         value={login}
         placeholder={'Login'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setLogin(obj);
         }}
@@ -28,22 +29,28 @@ const SignIn = ({ toRegister }) => {
         type="password"
         value={password}
         placeholder={'Password'}
-        className={styles.input}
+        className={styles.sign__input}
         onChange={(obj) => {
           setPassword(obj);
         }}
       />
-      <button type="submit" className={styles.signBtn} onClick={(e) => LogIn()}>
-        Sign in
-      </button>
-      <p>I'd like to register</p>
-      <button
-        type="button"
-        className={styles.signBtn}
-        onClick={(e) => toRegister(true)}
-      >
-        Sign up
-      </button>
+
+      <p className={styles.sign__separation}>Or</p>
+
+      <div style={{ marginTop: '100px' }}>
+        <PrimaryButton fontSize={'24px'} onClick={LogIn}>
+          Sign in
+        </PrimaryButton>
+      </div>
+      <p className={styles.sign__text}>
+        I'd like{' '}
+        <span
+          className={styles.sign__text_span}
+          onClick={(e) => toRegister(true)}
+        >
+          to register
+        </span>
+      </p>
     </div>
   );
 };

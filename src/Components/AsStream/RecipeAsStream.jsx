@@ -1,7 +1,7 @@
 import styles from '../../Pages/Recipe/Recipe.module.css';
 import React, { useEffect, useRef, useState } from 'react';
-import ProgressBar from '@ramonak/react-progress-bar';
 import parseRecipe from '../../Helpers/parseRecipe';
+import ProgressBar from '../ProgressBar/ProgressBar';
 import TextWithTypingEffect from '../TextBoxes/TextWithTypingEffect';
 import { PieChart, pieChartDefaultProps } from 'react-minimal-pie-chart';
 
@@ -12,7 +12,6 @@ const defaultLabelStyle = {
 const shiftSize = 1;
 
 const RecipeAsStream = ({ methods, events }) => {
-  const [completedValue, setCompletedValue] = useState(0);
   const [recipe, setRecipe] = useState({
     Description: '',
     Title: '',
@@ -40,17 +39,6 @@ const RecipeAsStream = ({ methods, events }) => {
     recipeRef.current = recipe;
   }, [recipe]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCompletedValue((prev) => {
-        const newValue = prev + 1;
-        return newValue > 99 ? 99 : newValue;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className={styles.recipeContainer}>
       <div className={styles.title}>
@@ -59,7 +47,7 @@ const RecipeAsStream = ({ methods, events }) => {
       <div className={styles.contentRow}>
         <div className={styles.imageContainer}>
           <div style={{ width: '200px', marginTop: '100px' }}>
-            <ProgressBar completed={completedValue} maxCompleted={100} />
+            <ProgressBar />
           </div>
         </div>
         <div className={styles.ingredients}>
