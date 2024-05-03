@@ -4,7 +4,6 @@ import styles from './RecipeCard.module.scss';
 
 const RecipeCard = ({ content, showRecipe, showLikes = false }) => {
   const convertedContent = convertKeysToLowerCase(content);
-  console.log(convertedContent);
 
   return (
     <div

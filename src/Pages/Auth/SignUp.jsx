@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../Clients/Http/AuthHtppClient';
+import PrimaryButton from '../../Components/Buttons/PrimaryButton';
 import SignInput from '../../Components/Inputs/SignInput';
 import styles from './Sign.module.scss';
 
@@ -23,8 +24,15 @@ const SignUp = ({ toRegister }) => {
     );
   }
 
+  function handleRegistration() {
+    return (e) => {
+      e.preventDefault();
+      register();
+    };
+  }
+
   return (
-    <div className={styles.sign}>
+    <form className={styles.sign} onSubmit={handleRegistration()}>
       <h2 className={styles.sign__title}>Create an account</h2>
       <SignInput
         value={login}
@@ -60,22 +68,40 @@ const SignUp = ({ toRegister }) => {
           setUserName(obj);
         }}
       />
-      <button
-        type="submit"
-        className={styles.signBtn}
-        onClick={(e) => register()}
-      >
-        Create an account
-      </button>
-      <p>Already have an account</p>
-      <button
-        type="button"
-        className={styles.signBtn}
-        onClick={(e) => toRegister(false)}
-      >
-        Log in
-      </button>
-    </div>
+      <p className={styles.sign__separation}>Or</p>
+
+      <div className={styles.sign__alternativeSign}>
+        <img
+          src="../Icon_google.png"
+          alt="Icon google"
+          className={styles.sign__alternativeSign_icon}
+        />
+        <img
+          src="../Icon_apple.png"
+          alt="Icon apple"
+          className={styles.sign__alternativeSign_icon}
+        />
+        <img
+          src="../Icon_facebook.png"
+          alt="Icon facebook"
+          className={styles.sign__alternativeSign_icon}
+        />
+      </div>
+      <div style={{ marginTop: '20px' }}>
+        <PrimaryButton fontSize={'24px'} type="submit">
+          Sign up
+        </PrimaryButton>
+      </div>
+      <p className={styles.sign__text}>
+        Already have an account{' '}
+        <span
+          className={styles.sign__text_span}
+          onClick={(e) => toRegister(false)}
+        >
+          To Log In
+        </span>
+      </p>
+    </form>
   );
 };
 

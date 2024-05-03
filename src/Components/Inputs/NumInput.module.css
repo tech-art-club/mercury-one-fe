@@ -1,5 +1,4 @@
 .numInput {
-  margin-right: 20px;
   padding-left: 8px;
   padding-right: 2px;
   width: 50px;
@@ -8,6 +7,7 @@
   border: 1px solid lightgray;
   box-shadow: none;
   border-radius: 4px;
+  margin-right: var(--num-input-container, 0);
 }
 
 .numInput::-webkit-outer-spin-button,
@@ -18,6 +18,7 @@
 
 .numInput:focus {
   box-shadow: 0 0 0 1.1px #2684ff;
-  outline: 1px solid #2684ff;
+  outline: 1.1px solid #2684ff;
   border-color: #2684ff;
+  transform: translate3d(0, 0, 0);
 }

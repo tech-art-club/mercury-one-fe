@@ -1,0 +1,25 @@
+.activeTag {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--light-gray);
+  color: var(--gray);
+  margin: 5px;
+  border-radius: 31px;
+  padding: 12px 12px 12px 24px;
+  height: 43px;
+  transition: 0.5s;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+}
+
+.removeActiveTagBtn {
+  margin-left: 5px;
+  color: var(--red);
+  transition: 0.5s;
+}
+
+.removeActiveTagBtn:hover {
+  scale: 1.2;
+}

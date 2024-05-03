@@ -10,7 +10,7 @@ $black-color: #141414;
   margin: 0 auto;
   margin-top: 50px;
   width: 500px;
-  height: 600px;
+  height: 650px;
   border-radius: 22px;
   background-color: white;
   border: 1px solid $main-color;
@@ -35,6 +35,11 @@ $black-color: #141414;
     font-size: 18px;
     line-height: 120%;
     color: $grey-color;
+
+    &_error {
+      border: 1px solid red !important;
+      box-shadow: 0 0 0 1px red;
+    }
   }
 
   &__input:focus {
@@ -72,6 +77,26 @@ $black-color: #141414;
     left: 0;
   }
 
+  &__alternativeSign {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 160px;
+    margin-top: 32px;
+
+    &_icon {
+      cursor: pointer;
+    }
+  }
+
+  &__error {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
+    color: red;
+    margin-top: 20px;
+  }
+
   &__text {
     font-weight: 400;
     font-size: 20px;
@@ -84,17 +109,4 @@ $black-color: #141414;
       color: $main-color;
     }
   }
-}
-
-.signBtn {
-  cursor: pointer;
-  width: 170px;
-  height: 50px;
-  padding: 15px;
-  margin-top: 25px;
-  background-color: black;
-  border: none;
-  border-radius: 15px;
-  color: white;
-  font-size: 17px;
 }

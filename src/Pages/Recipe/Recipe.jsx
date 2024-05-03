@@ -5,6 +5,7 @@ import Share from '../../Components/Share/Share';
 import RecipeLike from '../../Components/Likes/RecipeLike';
 import { addViewedRecipe } from '../../Store/Slices/authReducer';
 import { selectAuth } from '../../Store/Slices/authReducer';
+import NumInput from '../../Components/Inputs/NumInput';
 import styles from './Recipe.module.css';
 import { useEffect, useState } from 'react';
 import { PieChart, pieChartDefaultProps } from 'react-minimal-pie-chart';
@@ -23,6 +24,21 @@ const Recipe = () => {
   const userId = useSelector(selectAuth);
   const [recipe, setRecipe] = useState({});
   const [likes, setLikes] = useState(recipe.likes);
+  const [servings, setServings] = useState(1);
+
+  const handleIncrementServings = () => {
+    setServings((prevServings) => prevServings + 1);
+  };
+
+  const handleDecrementServings = () => {
+    if (servings > 1) {
+      setServings((prevServings) => prevServings - 1);
+    }
+  };
+
+  const handleNumInput = (index, property, value) => {
+    value && value > 0 ? setServings(value) : setServings(1);
+  };
 
   const updateLikes = (newLikes) => {
     setLikes((prevLikes) => prevLikes + newLikes);
@@ -62,11 +78,30 @@ const Recipe = () => {
           </div>
           <div className={styles.ingredients}>
             <p style={{ alignSelf: 'flex-start' }}>Ingredients</p>
-            <div className={styles.servings}>servings: 1 + -</div>
+            <div className={styles.servings}>
+              servings:
+              <div className={styles.numInputContainer}>
+                <NumInput placeholder={servings} onChange={handleNumInput} />
+              </div>
+              <div className={styles.sumChange}>
+                <p
+                  className={styles.sumChangeSign}
+                  onClick={handleIncrementServings}
+                >
+                  +
+                </p>
+                <p
+                  className={styles.sumChangeSign}
+                  onClick={handleDecrementServings}
+                >
+                  -
+                </p>
+              </div>
+            </div>
             {recipe.products?.map((el, i) => (
               <div className={styles.product} key={i}>
                 <div style={{ width: '50%' }}>{el.name}</div>
-                <div style={{ width: '20%' }}>{el.quantity}</div>
+                <div style={{ width: '20%' }}>{el.quantity * servings}</div>
                 <div style={{ width: '30%', textAlign: 'end' }}>
                   {el.measurement}
                 </div>

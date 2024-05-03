@@ -64,8 +64,34 @@
 }
 
 .servings {
+  --num-input-container: 10px;
   display: flex;
   align-self: flex-end;
+  align-items: center;
+}
+
+.numInputContainer {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sumChange {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.sumChangeSign {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  user-select: none;
+}
+
+.sumChangeSign:hover {
+  color: lightgray;
 }
 
 .product {

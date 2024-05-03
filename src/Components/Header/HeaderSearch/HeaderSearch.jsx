@@ -31,7 +31,9 @@ const HeaderSearch = () => {
     };
 
     if (inputValue.length > 2) {
-      fetchSearch(inputValue);
+      fetchSearch(
+        inputValue.charAt(0).toLocaleUpperCase() + inputValue.slice(1)
+      );
     }
     if (inputValue.length < 3) {
       setFetchedValue([]);
@@ -41,10 +43,12 @@ const HeaderSearch = () => {
   function handleInputSubmit(e) {
     e.preventDefault();
     dropdown.current.classList.remove(`${styles.showDropdown}`);
+    search.current.classList.remove(`${styles.search__input_active}`);
   }
 
   function showDropdown() {
     dropdown.current.classList.toggle(`${styles.showDropdown}`);
+    search.current.classList.toggle(`${styles.search__input_active}`);
   }
 
   function clearSearchHistory() {
@@ -107,6 +111,7 @@ const HeaderSearch = () => {
   window.onclick = function (e) {
     if (e.target !== search.current && e.target !== dropdown.current) {
       dropdown.current.classList.remove(`${styles.showDropdown}`);
+      search.current.classList.remove(`${styles.search__input_active}`);
     }
   };
 

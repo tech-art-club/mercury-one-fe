@@ -10,7 +10,6 @@ import styles from './Header.module.scss';
 const Header = () => {
   const isAuth = useSelector(selectAuth).isAuth;
   const navigate = useNavigate();
-  console.log(isAuth);
 
   function toHome() {
     navigate('/');

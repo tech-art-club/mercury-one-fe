@@ -11,6 +11,7 @@ const SignInput = ({
       placeholder={placeholder}
       value={value}
       className={className}
+      required
       onChange={(e) => {
         onChange(e.target.value);
       }}

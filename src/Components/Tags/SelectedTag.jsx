@@ -1,5 +1,5 @@
 import { RxCross2 } from 'react-icons/rx';
-import styles from './SelectedTag.module.css';
+import styles from './SelectedTag.module.scss';
 
 const SelectedTag = ({ content, removeTag }) => {
   return (

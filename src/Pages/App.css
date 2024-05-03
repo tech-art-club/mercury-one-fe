@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
 .App {
+  --white: #fff;
+  --black: #141414;
+  --main-color: #faa73f;
+  --hover: #d28b32;
+  --gray: #565454;
+  --light-gray: #b5b5b5;
+  --red: #ef4a58;
+  --third: #c67715;
   font-family: 'Poppins', sans-serif;
 }
 

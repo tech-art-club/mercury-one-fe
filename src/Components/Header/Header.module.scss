@@ -1,10 +1,8 @@
-$black-color: #141414;
-$main-color: #faa73f;
-
 .header {
   font-family: 'Poppins';
   display: flex;
   height: 101px;
+  width: 100%;
   padding: 26.5px 64px;
   align-items: center;
   background-color: white;
@@ -29,13 +27,18 @@ $main-color: #faa73f;
 }
 
 .nav {
+  margin-left: auto;
+
   &__list {
+    display: flex;
+    align-items: center;
+
     &_link {
       margin-right: 32px;
       font-weight: 400;
       font-size: 24px;
       line-height: 120%;
-      color: $black-color;
+      color: var(--black);
       text-decoration: none;
     }
 
@@ -49,6 +52,39 @@ $main-color: #faa73f;
       font-size: 20px;
       color: black;
       margin-left: 32px;
+    }
+  }
+}
+
+@media screen and (max-width: 1550px) {
+  .header {
+    padding: 26.5px 32px;
+
+    &__logo {
+      font-size: 20px;
+
+      &_text {
+        margin-right: 32px;
+      }
+    }
+  }
+
+  .nav {
+    &__list {
+      &_link {
+        font-size: 20px;
+        margin-right: 24px;
+      }
+
+      &_basket {
+        font-size: 16px;
+        margin-left: 24px;
+      }
+
+      &_account {
+        font-size: 16px;
+        margin-left: 24px;
+      }
     }
   }
 }

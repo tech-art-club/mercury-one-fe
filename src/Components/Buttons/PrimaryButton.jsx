@@ -1,13 +1,24 @@
 import styles from './PrimaryButton.module.scss';
 
-const PrimaryButton = ({ children, fontSize, display, onClick }) => {
+const PrimaryButton = ({
+  children,
+  fontSize,
+  display,
+  onClick,
+  type = 'text',
+}) => {
   const buttonStyle = {
     ...(fontSize && { fontSize: fontSize }),
     ...(display && { display: display }),
   };
 
   return (
-    <button className={styles.button} style={buttonStyle} onClick={onClick}>
+    <button
+      type={type}
+      className={styles.button}
+      style={buttonStyle}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

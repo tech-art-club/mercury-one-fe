@@ -46,9 +46,7 @@ const RecipeAsStream = ({ methods, events }) => {
       </div>
       <div className={styles.contentRow}>
         <div className={styles.imageContainer}>
-          <div style={{ width: '200px', marginTop: '100px' }}>
-            <ProgressBar />
-          </div>
+          <ProgressBar />
         </div>
         <div className={styles.ingredients}>
           <p style={{ alignSelf: 'flex-start' }}>Ingredients</p>

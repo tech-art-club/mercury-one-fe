@@ -23,6 +23,12 @@ $grey-color: #565454;
     border-radius: 8px;
     color: $grey-color;
     background-color: white;
+
+    &_active {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
   &__icon {
@@ -36,15 +42,20 @@ $grey-color: #565454;
   user-select: none;
   display: none;
   padding: 23px 32px;
-  width: 440px;
+  width: 100%;
   min-height: 100px;
   background-color: white;
   border: 1px solid black;
-  border-radius: 9px;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
   position: absolute;
 }
 
 .dropdownBtn {
+  align-self: center;
   cursor: pointer;
   width: 187px;
   height: 50px;
@@ -65,7 +76,7 @@ $grey-color: #565454;
   cursor: pointer;
   border: none;
   background-color: white;
-  color: #348be8;
+  color: var(--red);
   font-family: Poppins;
   font-size: 24px;
   font-style: normal;
@@ -82,7 +93,9 @@ $grey-color: #565454;
 }
 
 .showDropdown {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
 }
 
 .pastSearchContainer {
@@ -126,4 +139,10 @@ $grey-color: #565454;
 
 .searchItem:hover {
   background-color: lightgray;
+}
+
+@media screen and (max-width: 1550px) {
+  .search {
+    width: 500px;
+  }
 }

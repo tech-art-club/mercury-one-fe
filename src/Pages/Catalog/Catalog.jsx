@@ -111,9 +111,19 @@ const Catalog = () => {
     navigate(`?${decodeURIComponent(urlSearchParams.toString())}`);
   }
 
+  function clearQuery() {
+    navigate('');
+  }
+
   return (
     <div className={styles.catalog}>
       <div className={styles.catalog__tags}>
+        <div className={styles.catalog__tags_amountSelected}>
+          {filtredRecipes.length} recipes selected
+        </div>
+        <div className={styles.catalog__tags_remove} onClick={clearQuery}>
+          Reset
+        </div>
         <CatalogTags content={selectedFilter.titles} removeTag={removeTag} />
       </div>
       <div className={styles.catalog__filterContainer}>

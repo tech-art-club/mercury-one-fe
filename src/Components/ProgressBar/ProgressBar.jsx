@@ -6,7 +6,7 @@ const ProgressBar = () => {
   return (
     <div className={styles.progressBar}>
       <Flat
-        progress={90}
+        progress={99}
         range={{ from: 0, to: 100 }}
         sign={{ value: '%', position: 'end' }}
         text={''}
@@ -21,7 +21,7 @@ const ProgressBar = () => {
           strokeLinecap: 'round',
           valueSize: 13,
           valueWeight: 'bold',
-          valueColor: '#000000',
+          valueColor: '#febc6a',
           valueFamily: 'Trebuchet MS',
           textSize: 13,
           textWeight: 'bold',

@@ -48,6 +48,10 @@ async function signIn(userData, dispatch) {
       setLocalStorage('refresh', response.data.refresh);
       handleAddUser(response.data.access, dispatch);
     }
+
+    if (response.status === 204) {
+      return response.status;
+    }
   } catch (error) {
     console.error('Ошибка при входе в систему:', error);
   }

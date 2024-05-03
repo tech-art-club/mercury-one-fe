@@ -9,18 +9,38 @@ const SignIn = ({ toRegister }) => {
   const dispatch = useDispatch();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [isCredentialsValid, setIsCredentialsValid] = useState(true);
 
-  function LogIn() {
-    signIn({ login: login, password: password }, dispatch);
+  async function LogIn() {
+    try {
+      const res = await signIn({ login: login, password: password }, dispatch);
+      if (res === 204) {
+        setIsCredentialsValid(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  function handleLogin() {
+    return (e) => {
+      e.preventDefault();
+      LogIn();
+    };
   }
 
   return (
-    <div className={styles.sign}>
+    <form className={styles.sign} onSubmit={handleLogin()}>
+      {' '}
       <h2 className={styles.sign__title}>Please, sign in</h2>
       <SignInput
         value={login}
         placeholder={'Login'}
-        className={styles.sign__input}
+        className={
+          isCredentialsValid
+            ? styles.sign__input
+            : `${styles.sign__input} ${styles.sign__input_error}`
+        }
         onChange={(obj) => {
           setLogin(obj);
         }}
@@ -29,16 +49,42 @@ const SignIn = ({ toRegister }) => {
         type="password"
         value={password}
         placeholder={'Password'}
-        className={styles.sign__input}
+        className={
+          isCredentialsValid
+            ? styles.sign__input
+            : `${styles.sign__input} ${styles.sign__input_error}`
+        }
         onChange={(obj) => {
           setPassword(obj);
         }}
       />
-
       <p className={styles.sign__separation}>Or</p>
-
-      <div style={{ marginTop: '100px' }}>
-        <PrimaryButton fontSize={'24px'} onClick={LogIn}>
+      <div className={styles.sign__alternativeSign}>
+        <img
+          src="../Icon_google.png"
+          alt="Icon google"
+          className={styles.sign__alternativeSign_icon}
+        />
+        <img
+          src="../Icon_apple.png"
+          alt="Icon apple"
+          className={styles.sign__alternativeSign_icon}
+        />
+        <img
+          src="../Icon_facebook.png"
+          alt="Icon facebook"
+          className={styles.sign__alternativeSign_icon}
+        />
+      </div>
+      {!isCredentialsValid && (
+        <p className={styles.sign__error}>Invalid login or password</p>
+      )}
+      <div
+        style={
+          !isCredentialsValid ? { marginTop: '59px' } : { marginTop: '100px' }
+        }
+      >
+        <PrimaryButton fontSize={'24px'} type="submit">
           Sign in
         </PrimaryButton>
       </div>
@@ -51,7 +97,7 @@ const SignIn = ({ toRegister }) => {
           to register
         </span>
       </p>
-    </div>
+    </form>
   );
 };
 
